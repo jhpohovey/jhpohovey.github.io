@@ -1,0 +1,6 @@
+@article{huang2023neural,
+  title={Neural Informed RRT*: Learning-based Path Planning with Point Cloud State Representations under Admissible Ellipsoidal Constraints},
+  author={Huang, Zhe and Chen, Hongyu and Pohovey, John and Driggs-Campbell, Katherine},
+  journal={arXiv preprint arXiv:2309.14595},
+  year={2023}
+}
