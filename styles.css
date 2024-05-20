@@ -27,3 +27,14 @@ a.icon-text:hover {
     align-items: center;
 }
 
+.research-row {
+    display: flex;
+    align-items: start;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.research-text-content {
+    margin-left: 20px;
+}
