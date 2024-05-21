@@ -27,11 +27,20 @@ jobs:
     - run: |
         python generate_sitemap.py
 
-    - name: Commit sitemap
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-        git add sitemap.xml
-        git commit -m 'Autonomous sitemap update'
-        git remote set-url origin https://${{ secrets.WEBSITE_TOKEN }}@github.com/jhpohovey/jhpohovey.github.io.git
-        git push
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4 # Specify the version you want to use
+      with:
+        commit-message: 'Autonomous sitemap update'
+        committer: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
+        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+        signoff: false
+        title: 'Update sitemap'
+        body: |
+            Automated PR to update sitemap
+        labels: |
+            sitemap
+        assignees: jhpohovey
+        reviewers: jhpohovey
+        draft: false
+        branch: update-sitemap
+        delete-branch: true
