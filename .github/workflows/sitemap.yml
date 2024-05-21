@@ -43,4 +43,4 @@ jobs:
         reviewers: jhpohovey
         draft: false
         branch: update-sitemap
-        delete-branch: true
+        delete-branch: false
