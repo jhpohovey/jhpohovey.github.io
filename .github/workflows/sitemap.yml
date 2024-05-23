@@ -53,14 +53,7 @@ jobs:
     - name: Sleep to allow Pull Request to settle, get a defined status
       uses: whatnick/wait-action@master
       with:
-        time: "10s"
-
-    - name: Use Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-        cache: "npm"
-    - run: npm ci
+        time: "5s"
 
     - name: Merge Version Bump Pull Request
       uses: juliangruber/merge-pull-request-action@v1.3.1
