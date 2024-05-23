@@ -55,6 +55,7 @@ jobs:
         MERGE_RETRY_SLEEP: 30000
         MERGE_COMMIT_MESSAGE: "pull-request-title-and-description"
         MERGE_DELETE_BRANCH: true
+        MERGE_READY_STATE: "clean,unknown,has_hooks" # but not unstable
         GITHUB_TOKEN: "${{ secrets.WEBSITE_TOKEN }}"
         LOG: "DEBUG"
         UPDATE_LABELS: "automerge"
