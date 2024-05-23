@@ -20,7 +20,7 @@ for url in urls:
     sitemap_content += f'    <priority>1.0</priority>\n'
     sitemap_content += f'  </url>'
 
-sitemap_content += f'</urlset>'
+sitemap_content += f'</urlset>\n'
 
 with open("sitemap.xml", "w") as f:
     f.write(sitemap_content)

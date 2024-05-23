@@ -53,6 +53,7 @@ jobs:
       uses: whatnick/wait-action@master
       with:
         time: "5s"
+      if: steps.make-pr.outputs.pull-request-number != ''
 
     - name: Merge Version Bump Pull Request
       uses: juliangruber/merge-pull-request-action@v1
@@ -60,6 +61,7 @@ jobs:
         github-token: ${{ secrets.WEBSITE_TOKEN }}
         number: ${{ steps.make-pr.outputs.pull-request-number }}
         method: "merge"
+      if: steps.make-pr.outputs.pull-request-number != ''
 
 
 
