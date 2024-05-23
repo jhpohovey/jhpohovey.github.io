@@ -38,7 +38,7 @@ jobs:
         token: ${{ secrets.WEBSITE_TOKEN }}
         commit-message: 'Autonomous sitemap update'
         committer: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
-        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+        author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
         signoff: false
         title: 'Update sitemap'
         body: |
