@@ -51,7 +51,7 @@ jobs:
       env:
         MERGE_LABELS: 'automerge'
         MERGE_METHOD: 'merge'
-        MERGE_RETRIES: 1
+        MERGE_RETRIES: 10
         MERGE_RETRY_SLEEP: 30000
         MERGE_COMMIT_MESSAGE: "pull-request-title-and-description"
         MERGE_DELETE_BRANCH: true
@@ -60,7 +60,7 @@ jobs:
         LOG: "DEBUG"
         UPDATE_LABELS: "automerge"
         UPDATE_METHOD: "merge"
-        UPDATE_RETRIES: 1
+        UPDATE_RETRIES: 10
         UPDATE_RETRY_SLEEP: 30000
 
     # - name: feedback
