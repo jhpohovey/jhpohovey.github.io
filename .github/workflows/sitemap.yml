@@ -55,10 +55,6 @@ jobs:
       with:
         time: "10s"
 
-    - name: Get Package Version
-      id: package-version
-      uses: martinbeentjes/npm-get-version-action@main
-
     - name: Use Node
       uses: actions/setup-node@v4
       with:
