@@ -28,9 +28,10 @@ jobs:
         python generate_sitemap.py
 
     - name: Create Pull Request
+      id: make-pr
       uses: peter-evans/create-pull-request@v6
       with:
-        token: ${{ secrets.WEBSITE_TOKEN}}
+        token: ${{ secrets.WEBSITE_TOKEN }}
         commit-message: 'Autonomous sitemap update'
         committer: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
         author: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
@@ -45,16 +46,22 @@ jobs:
         branch: update-sitemap
         delete-branch: false
 
-    - name: Checkout
-      uses: actions/checkout@v4
-      
-    - name: Merge PR
-      run: |
-          PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
-          curl \
-          -X PUT \
-          -H "Authorization: Bearer ${{ secrets.WEBSITE_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/merge
-      env:
-          GITHUB_TOKEN: ${{ secrets.WEBSITE_TOKEN }}
+    - name: Approve Pull Request
+      uses: juliangruber/approve-pull-request-action@v2
+      with:
+        github-token: ${{ secrets.WEBSITE_TOKEN }}
+        number: ${{ steps.make-pr.outputs.pull-request-number }}
+
+    - name: Sleep to allow Pull Request to settle, get a defined status
+      uses: whatnick/wait-action@master
+      with:
+        time: '30s'
+
+    - name: Merge pull request
+      uses: juliangruber/merge-pull-request-action@v1
+      with:
+        github-token: ${{ secrets.WEBSITE_TOKEN }}
+        number: ${{ steps.make-pr.outputs.pull-request-number }}
+        method: 'merge'
+
+
