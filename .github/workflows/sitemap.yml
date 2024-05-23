@@ -38,7 +38,7 @@ jobs:
         token: ${{ secrets.WEBSITE_TOKEN }}
         commit-message: 'Autonomous sitemap update'
         committer: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
-        author: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
+        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
         signoff: false
         title: 'Update sitemap'
         body: |
@@ -46,20 +46,20 @@ jobs:
         labels: |
             sitemap
         draft: false
-        branch: update-sitemap1
+        branch: update-sitemap
         delete-branch: false
 
-    - name: Sleep to allow Pull Request to settle, get a defined status
-      uses: whatnick/wait-action@master
-      with:
-        time: "5s"
+    # - name: Sleep to allow Pull Request to settle, get a defined status
+    #   uses: whatnick/wait-action@master
+    #   with:
+    #     time: "5s"
 
-    - name: Merge Version Bump Pull Request
-      uses: juliangruber/merge-pull-request-action@v1
-      with:
-        github-token: ${{ secrets.WEBSITE_TOKEN }}
-        number: ${{ steps.make-pr.outputs.pull-request-number }}
-        method: "merge"
+    # - name: Merge Version Bump Pull Request
+    #   uses: juliangruber/merge-pull-request-action@v1
+    #   with:
+    #     github-token: ${{ secrets.WEBSITE_TOKEN }}
+    #     number: ${{ steps.make-pr.outputs.pull-request-number }}
+    #     method: "merge"
     
 
 
