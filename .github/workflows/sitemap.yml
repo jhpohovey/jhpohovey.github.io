@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+permissions:
+  pull-requests: write
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,22 +50,18 @@ jobs:
         branch: update-sitemap
         delete-branch: false
 
-    - name: Approve Pull Request
-      uses: juliangruber/approve-pull-request-action@v2
-      with:
-        github-token: ${{ secrets.WEBSITE_TOKEN }}
-        number: ${{ steps.make-pr.outputs.pull-request-number }}
-
     - name: Sleep to allow Pull Request to settle, get a defined status
       uses: whatnick/wait-action@master
       with:
         time: '30s'
 
-    - name: Merge pull request
-      uses: juliangruber/merge-pull-request-action@v1
+    - name: Merge Pull Request
+      uses: juliangruber/merge-pull-request-action@v1.3.1
       with:
         github-token: ${{ secrets.WEBSITE_TOKEN }}
         number: ${{ steps.make-pr.outputs.pull-request-number }}
-        method: 'merge'
+        method: "merge"
+    
+
 
 
