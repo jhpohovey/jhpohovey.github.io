@@ -40,8 +40,6 @@ jobs:
             Automated PR to update sitemap
         labels: |
             sitemap
-        assignees: jhpohovey
-        reviewers: jhpohovey
         draft: false
         branch: update-sitemap
         delete-branch: false
