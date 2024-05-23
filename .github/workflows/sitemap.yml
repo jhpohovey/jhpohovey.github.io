@@ -45,9 +45,8 @@ jobs:
             Automated PR to update sitemap
         labels: |
             sitemap
-            automerge
         draft: false
-        branch: update-sitemap
+        branch: update-sitemap1
         delete-branch: false
 
     - name: Sleep to allow Pull Request to settle, get a defined status
