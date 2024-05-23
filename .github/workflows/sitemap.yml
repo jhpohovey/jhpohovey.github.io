@@ -56,7 +56,7 @@ jobs:
         MERGE_COMMIT_MESSAGE: "pull-request-title-and-description"
         MERGE_DELETE_BRANCH: true
         GITHUB_TOKEN: "${{ secrets.WEBSITE_TOKEN }}"
-        LOG: "debug"
+        LOG: "DEBUG"
         UPDATE_LABELS: "automerge"
         UPDATE_METHOD: "merge"
         UPDATE_RETRIES: 1
