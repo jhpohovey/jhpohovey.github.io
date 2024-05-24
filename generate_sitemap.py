@@ -5,7 +5,7 @@ BASE_URL = "https://jhpohovey.github.io/"
 lastmod = datetime.now().strftime("%Y-%m-%d")
 
 urls = [
-    BASE_URL,
+    BASE_URL + "index.html",
 ]
 
 sitemap_content = f'<?xml version="1.0" encoding="UTF-8"?>\n'
