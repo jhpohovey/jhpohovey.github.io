@@ -38,3 +38,8 @@ a.icon-text:hover {
 .research-text-content {
     margin-left: 20px;
 }
+
+.research-thumbnail {
+    width: 400px;
+    background-color: #ccc;
+}
