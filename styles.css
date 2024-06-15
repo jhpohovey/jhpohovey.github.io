@@ -47,3 +47,15 @@ a.icon-text:hover {
     max-width: 100%;
     height: auto;
 }
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a {
+    color: #2334d2;
+}
