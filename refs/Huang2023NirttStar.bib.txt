@@ -1,6 +1,11 @@
-@article{huang2023neural,
-  title={Neural Informed RRT*: Learning-based Path Planning with Point Cloud State Representations under Admissible Ellipsoidal Constraints},
+@INPROCEEDINGS{huang2024nirrt,
   author={Huang, Zhe and Chen, Hongyu and Pohovey, John and Driggs-Campbell, Katherine},
-  journal={arXiv preprint arXiv:2309.14595},
-  year={2023}
+  booktitle={2024 IEEE International Conference on Robotics and Automation (ICRA)}, 
+  title={Neural Informed RRT*: Learning-based Path Planning with Point Cloud State Representations under Admissible Ellipsoidal Constraints}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={8742-8748},
+  keywords={Point cloud compression;Training;Navigation;Probabilistic logic;Path planning;Planning;Topology},
+  doi={10.1109/ICRA57147.2024.10611099}
 }
