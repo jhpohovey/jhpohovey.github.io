@@ -1,0 +1,9 @@
+@misc{huang2024litlargelanguagemodel,
+      title={LIT: Large Language Model Driven Intention Tracking for Proactive Human-Robot Collaboration -- A Robot Sous-Chef Application}, 
+      author={Zhe Huang and John Pohovey and Ananya Yammanuru and Katherine Driggs-Campbell},
+      year={2024},
+      eprint={2406.13787},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2406.13787}, 
+}
