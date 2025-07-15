@@ -15,16 +15,12 @@
 
 a.icon-text {
     display: flex;
+    align-items: center;
     text-decoration: none;
     color: #000;
 }
 a.icon-text:hover {
     color: #d352b9;
-}
-
-.icon-text div {
-    display: inline-flex;
-    align-items: center;
 }
 
 .research-row {
