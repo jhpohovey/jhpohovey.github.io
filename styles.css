@@ -29,19 +29,23 @@ a.icon-text:hover {
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     padding: 10px 0;
+    min-height: 180px;
 }
 
 .research-text-content {
     margin-left: 20px;
+    flex: 1;
 }
 
 .research-thumbnail {
     width: 400px;
+    flex-shrink: 0;
 }
 
 .research-thumbnail img {
-    max-width: 100%;
+    width: 400px;
     height: auto;
+    object-fit: contain;
 }
 
 a:link {
