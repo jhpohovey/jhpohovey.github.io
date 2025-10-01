@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Block test directories and files anywhere on the site
+Disallow: tests/
+Disallow: test.html
+
 Sitemap: https://jhpohovey.github.io/sitemap.xml

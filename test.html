@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Page - Website Functionality</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 { color: #2563eb; }
+    .test-section {
+      margin: 30px 0;
+      padding: 20px;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+    }
+    .pass { color: #10b981; font-weight: bold; }
+    .fail { color: #ef4444; font-weight: bold; }
+    .pending { color: #f59e0b; font-weight: bold; }
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+    }
+    button {
+      padding: 10px 20px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    #results {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f9fafb;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Website Functionality Test Suite</h1>
+  
+  <div class="test-section">
+    <h2>Quick Links</h2>
+    <button onclick="window.open('/', '_blank')">Open Home Page</button>
+    <button onclick="window.open('/publications.html', '_blank')">Open Publications</button>
+    <button onclick="location.reload()">Reload Tests</button>
+  </div>
+
+  <div class="test-section">
+    <h2>File Structure Tests</h2>
+    <div id="file-tests">Running tests...</div>
+  </div>
+
+  <div class="test-section">
+    <h2>JavaScript Module Tests</h2>
+    <div id="js-tests">Running tests...</div>
+  </div>
+
+  <div class="test-section">
+    <h2>Data Loading Tests</h2>
+    <div id="data-tests">Running tests...</div>
+  </div>
+
+  <div class="test-section">
+    <h2>CSS Loading Tests</h2>
+    <div id="css-tests">Running tests...</div>
+  </div>
+
+  <div id="results"></div>
+
+  <script>
+    // Test utilities
+    function log(message, status = 'pass') {
+      const icon = status === 'pass' ? '✅' : status === 'fail' ? '❌' : '⏳';
+      return `<div class="${status}">${icon} ${message}</div>`;
+    }
+
+    async function testFileExists(url) {
+      try {
+        const response = await fetch(url);
+        return response.ok;
+      } catch (error) {
+        return false;
+      }
+    }
+
+    // Test file structure
+    async function testFiles() {
+      const container = document.getElementById('file-tests');
+      let results = '';
+
+      const files = [
+        '/index.html',
+        '/publications.html',
+        '/styles/reset.css',
+        '/styles/variables.css',
+        '/styles/layout.css',
+        '/styles/theme.css',
+        '/styles/components.css',
+        '/styles/publications.css',
+        '/styles/utilities.css',
+        '/styles/print.css',
+        '/scripts/theme.js',
+        '/scripts/email.js',
+        '/scripts/publications.js',
+        '/scripts/animations.js',
+        '/scripts/accessibility.js',
+        '/data/publications.json',
+        '/robots.txt'
+      ];
+
+      for (const file of files) {
+        const exists = await testFileExists(file);
+        results += log(`${file} exists`, exists ? 'pass' : 'fail');
+      }
+
+      container.innerHTML = results;
+    }
+
+    // Test JavaScript modules
+    function testJavaScript() {
+      const container = document.getElementById('js-tests');
+      let results = '';
+
+      // Check if modules loaded
+      if (typeof window.themeModule !== 'undefined') {
+        results += log('Theme module loaded');
+      } else {
+        results += log('Theme module NOT loaded', 'fail');
+      }
+
+      if (typeof window.emailModule !== 'undefined') {
+        results += log('Email module loaded');
+      } else {
+        results += log('Email module NOT loaded', 'fail');
+      }
+
+      if (typeof window.publicationsModule !== 'undefined') {
+        results += log('Publications module loaded');
+      } else {
+        results += log('Publications module NOT loaded', 'fail');
+      }
+
+      if (typeof window.animationsModule !== 'undefined') {
+        results += log('Animations module loaded');
+      } else {
+        results += log('Animations module NOT loaded', 'fail');
+      }
+
+      if (typeof window.accessibilityModule !== 'undefined') {
+        results += log('Accessibility module loaded');
+      } else {
+        results += log('Accessibility module NOT loaded', 'fail');
+      }
+
+      // Test ROT13
+      if (typeof window.rot13 !== 'undefined') {
+        const test = window.rot13('test');
+        if (test === 'grfg') {
+          results += log('ROT13 encoding works');
+        } else {
+          results += log('ROT13 encoding FAILED', 'fail');
+        }
+      }
+
+      container.innerHTML = results;
+    }
+
+    // Test data loading
+    async function testData() {
+      const container = document.getElementById('data-tests');
+      let results = '';
+
+      try {
+        const response = await fetch('/data/publications.json');
+        const data = await response.json();
+        
+        if (data.publications && Array.isArray(data.publications)) {
+          results += log(`Publications JSON valid (${data.publications.length} publications)`);
+          
+          // Check first publication structure
+          if (data.publications.length > 0) {
+            const pub = data.publications[0];
+            const requiredFields = ['id', 'title', 'authors', 'venue', 'year', 'links'];
+            let allFieldsPresent = true;
+            
+            for (const field of requiredFields) {
+              if (!(field in pub)) {
+                results += log(`Missing field: ${field}`, 'fail');
+                allFieldsPresent = false;
+              }
+            }
+            
+            if (allFieldsPresent) {
+              results += log('All required publication fields present');
+            }
+          }
+        } else {
+          results += log('Publications JSON structure invalid', 'fail');
+        }
+      } catch (error) {
+        results += log(`Failed to load publications: ${error.message}`, 'fail');
+      }
+
+      container.innerHTML = results;
+    }
+
+    // Test CSS loading
+    function testCSS() {
+      const container = document.getElementById('css-tests');
+      let results = '';
+
+      const stylesheets = Array.from(document.styleSheets);
+      const expectedSheets = [
+        'reset.css',
+        'variables.css',
+        'layout.css',
+        'theme.css',
+        'components.css',
+        'utilities.css'
+      ];
+
+      for (const expected of expectedSheets) {
+        const found = stylesheets.some(sheet => 
+          sheet.href && sheet.href.includes(expected)
+        );
+        if (found) {
+          results += log(`${expected} loaded`);
+        } else {
+          results += log(`${expected} NOT loaded`, 'fail');
+        }
+      }
+
+      // Check if CSS variables are defined
+      const root = document.documentElement;
+      const primaryColor = getComputedStyle(root).getPropertyValue('--color-primary');
+      if (primaryColor) {
+        results += log('CSS custom properties working');
+      } else {
+        results += log('CSS custom properties NOT working', 'fail');
+      }
+
+      container.innerHTML = results;
+    }
+
+    // Run all tests
+    async function runAllTests() {
+      console.log('Starting test suite...');
+      await testFiles();
+      testJavaScript();
+      await testData();
+      testCSS();
+      
+      document.getElementById('results').innerHTML = `
+        <h3>Test Suite Complete</h3>
+        <p>Check the sections above for detailed results.</p>
+        <p><strong>Note:</strong> Some module tests may fail on this test page since modules are loaded on-demand on actual pages.</p>
+      `;
+    }
+
+    // Run tests when page loads
+    window.addEventListener('DOMContentLoaded', runAllTests);
+  </script>
+</body>
+</html>

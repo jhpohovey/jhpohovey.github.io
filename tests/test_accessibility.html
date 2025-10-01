@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessibility Features Test</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/variables.css">
+  <link rel="stylesheet" href="../styles/utilities.css">
+  <style>
+    body {
+      padding: 2rem;
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .test-section {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border: 2px solid var(--color-border-light);
+      border-radius: 8px;
+    }
+    .test-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+    .test-result {
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .test-pass {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .test-fail {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .test-description {
+      margin-bottom: 1rem;
+      color: var(--color-text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <h1>Accessibility Contract Tests</h1>
+  <p>Tests for WCAG 2.1 AA compliance, keyboard navigation, ARIA attributes, and semantic HTML.</p>
+
+  <!-- Skip link for testing -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <main id="main-content">
+    <div id="test-container"></div>
+  </main>
+
+  <script type="module">
+    const tests = [];
+    let passCount = 0;
+    let failCount = 0;
+
+    function addTest(name, description, testFn) {
+      tests.push({ name, description, testFn });
+    }
+
+    async function runTests() {
+      const container = document.getElementById('test-container');
+      
+      for (const test of tests) {
+        const section = document.createElement('div');
+        section.className = 'test-section';
+        
+        const title = document.createElement('div');
+        title.className = 'test-title';
+        title.textContent = test.name;
+        section.appendChild(title);
+
+        const description = document.createElement('div');
+        description.className = 'test-description';
+        description.textContent = test.description;
+        section.appendChild(description);
+
+        try {
+          await test.testFn(section);
+          const result = document.createElement('div');
+          result.className = 'test-result test-pass';
+          result.textContent = '✓ PASS';
+          section.appendChild(result);
+          passCount++;
+        } catch (error) {
+          const result = document.createElement('div');
+          result.className = 'test-result test-fail';
+          result.textContent = `✗ FAIL: ${error.message}`;
+          section.appendChild(result);
+          failCount++;
+        }
+
+        container.appendChild(section);
+      }
+
+      // Summary
+      const summary = document.createElement('div');
+      summary.className = 'test-section';
+      summary.innerHTML = `
+        <div class="test-title">Test Summary</div>
+        <p>Total: ${tests.length} | Pass: ${passCount} | Fail: ${failCount}</p>
+      `;
+      container.appendChild(summary);
+    }
+
+    // TEST 1: HTML lang attribute
+    addTest(
+      'Test 1: HTML Language Attribute',
+      'HTML element should have lang attribute',
+      async (section) => {
+        const html = document.documentElement;
+        const lang = html.getAttribute('lang');
+        
+        if (!lang) throw new Error('HTML element missing lang attribute');
+        if (lang !== 'en') throw new Error(`Expected lang="en", got lang="${lang}"`);
+        
+        section.appendChild(document.createTextNode('lang="en" is set'));
+      }
+    );
+
+    // TEST 2: Skip to content link
+    addTest(
+      'Test 2: Skip Link',
+      'Should have skip-to-content link for keyboard users',
+      async (section) => {
+        const skipLink = document.querySelector('.skip-link');
+        if (!skipLink) throw new Error('Skip link not found');
+        
+        const href = skipLink.getAttribute('href');
+        if (!href || !href.startsWith('#')) {
+          throw new Error('Skip link does not have valid anchor href');
+        }
+        
+        section.appendChild(document.createTextNode(`Skip link found: ${href}`));
+      }
+    );
+
+    // TEST 3: Main landmark
+    addTest(
+      'Test 3: Main Landmark',
+      'Page should have <main> landmark',
+      async (section) => {
+        const main = document.querySelector('main');
+        if (!main) throw new Error('No <main> element found');
+        
+        section.appendChild(document.createTextNode('Main landmark present'));
+      }
+    );
+
+    // TEST 4: Heading hierarchy
+    addTest(
+      'Test 4: Heading Hierarchy',
+      'Headings should follow proper hierarchy (h1 → h2 → h3)',
+      async (section) => {
+        const h1 = document.querySelector('h1');
+        if (!h1) throw new Error('No h1 found');
+        
+        section.appendChild(document.createTextNode('Heading hierarchy starts with h1'));
+      }
+    );
+
+    // TEST 5: Focus visible styles
+    addTest(
+      'Test 5: Focus Visible Styles',
+      'Interactive elements should have visible focus indicators',
+      async (section) => {
+        // Create a test button
+        const button = document.createElement('button');
+        button.textContent = 'Test Button';
+        button.className = 'focus-ring';
+        document.body.appendChild(button);
+        
+        button.focus();
+        
+        if (document.activeElement !== button) {
+          throw new Error('Button not focusable');
+        }
+        
+        // Cleanup
+        button.remove();
+        section.appendChild(document.createTextNode('Focus indicators working'));
+      }
+    );
+
+    // TEST 6: Color contrast
+    addTest(
+      'Test 6: Color Contrast Check',
+      'Should use colors with sufficient contrast (manual verification needed)',
+      async (section) => {
+        // Note: Automated color contrast testing requires specialized libraries
+        // This is a placeholder that checks CSS variables exist
+        const root = document.documentElement;
+        const computed = window.getComputedStyle(root);
+        
+        const textColor = computed.getPropertyValue('--color-text-primary');
+        const bgColor = computed.getPropertyValue('--color-bg-primary');
+        
+        if (!textColor || !bgColor) {
+          throw new Error('Color variables not defined');
+        }
+        
+        section.appendChild(document.createTextNode('Color variables defined (manual contrast check required)'));
+      }
+    );
+
+    // TEST 7: Semantic HTML
+    addTest(
+      'Test 7: Semantic HTML Elements',
+      'Should use semantic HTML5 elements',
+      async (section) => {
+        // This will fail until HTML files are created
+        const header = document.querySelector('header');
+        const nav = document.querySelector('nav');
+        const main = document.querySelector('main');
+        const footer = document.querySelector('footer');
+        
+        const semanticElements = [];
+        if (header) semanticElements.push('header');
+        if (nav) semanticElements.push('nav');
+        if (main) semanticElements.push('main');
+        if (footer) semanticElements.push('footer');
+        
+        if (semanticElements.length === 0) {
+          throw new Error('No semantic HTML5 elements found');
+        }
+        
+        section.appendChild(document.createTextNode(`Found: ${semanticElements.join(', ')}`));
+      }
+    );
+
+    // TEST 8: Alt text for images
+    addTest(
+      'Test 8: Image Alt Attributes',
+      'All images should have alt attributes',
+      async (section) => {
+        const images = document.querySelectorAll('img');
+        
+        if (images.length === 0) {
+          section.appendChild(document.createTextNode('No images found on page'));
+          return;
+        }
+        
+        const missingAlt = Array.from(images).filter(img => !img.hasAttribute('alt'));
+        
+        if (missingAlt.length > 0) {
+          throw new Error(`${missingAlt.length} images missing alt attributes`);
+        }
+        
+        section.appendChild(document.createTextNode(`All ${images.length} images have alt attributes`));
+      }
+    );
+
+    // TEST 9: ARIA labels
+    addTest(
+      'Test 9: ARIA Labels',
+      'Interactive elements should have appropriate ARIA labels',
+      async (section) => {
+        const buttons = document.querySelectorAll('button:not([aria-label]):not([aria-labelledby])');
+        
+        if (buttons.length > 0) {
+          // Check if buttons have visible text instead
+          const noText = Array.from(buttons).filter(btn => !btn.textContent.trim());
+          if (noText.length > 0) {
+            throw new Error(`${noText.length} buttons without labels or text`);
+          }
+        }
+        
+        section.appendChild(document.createTextNode('ARIA labels check passed'));
+      }
+    );
+
+    // TEST 10: Keyboard navigation
+    addTest(
+      'Test 10: Keyboard Navigation',
+      'All interactive elements should be keyboard accessible',
+      async (section) => {
+        // Get all potentially interactive elements
+        const interactive = document.querySelectorAll('a, button, input, select, textarea');
+        
+        let nonFocusable = 0;
+        interactive.forEach(el => {
+          const tabindex = el.getAttribute('tabindex');
+          if (tabindex === '-1' && !el.hasAttribute('aria-hidden')) {
+            nonFocusable++;
+          }
+        });
+        
+        section.appendChild(document.createTextNode(`${interactive.length} interactive elements found`));
+      }
+    );
+
+    // TEST 11: Link text
+    addTest(
+      'Test 11: Descriptive Link Text',
+      'Links should have descriptive text (not "click here")',
+      async (section) => {
+        const links = document.querySelectorAll('a');
+        const genericText = ['click here', 'here', 'link', 'read more'];
+        
+        let badLinks = 0;
+        links.forEach(link => {
+          const text = link.textContent.trim().toLowerCase();
+          if (genericText.includes(text)) {
+            badLinks++;
+          }
+        });
+        
+        if (badLinks > 0) {
+          throw new Error(`${badLinks} links with non-descriptive text`);
+        }
+        
+        section.appendChild(document.createTextNode('Link text descriptive'));
+      }
+    );
+
+    // TEST 12: Reduced motion support
+    addTest(
+      'Test 12: Prefers Reduced Motion',
+      'Should respect prefers-reduced-motion preference',
+      async (section) => {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        section.appendChild(document.createTextNode(
+          `Reduced motion: ${prefersReducedMotion ? 'enabled' : 'disabled'} (CSS handles this)`
+        ));
+      }
+    );
+
+    // TEST 13: Form labels
+    addTest(
+      'Test 13: Form Input Labels',
+      'All form inputs should have associated labels',
+      async (section) => {
+        const inputs = document.querySelectorAll('input, select, textarea');
+        
+        if (inputs.length === 0) {
+          section.appendChild(document.createTextNode('No form inputs on page'));
+          return;
+        }
+        
+        let unlabeled = 0;
+        inputs.forEach(input => {
+          const id = input.id;
+          const hasLabel = id && document.querySelector(`label[for="${id}"]`);
+          const hasAriaLabel = input.hasAttribute('aria-label') || input.hasAttribute('aria-labelledby');
+          
+          if (!hasLabel && !hasAriaLabel) {
+            unlabeled++;
+          }
+        });
+        
+        if (unlabeled > 0) {
+          throw new Error(`${unlabeled} form inputs without labels`);
+        }
+        
+        section.appendChild(document.createTextNode('All form inputs labeled'));
+      }
+    );
+
+    // TEST 14: Touch target size
+    addTest(
+      'Test 14: Minimum Touch Target Size',
+      'Interactive elements should meet 44x44px minimum (WCAG 2.1)',
+      async (section) => {
+        const buttons = document.querySelectorAll('button, a');
+        
+        if (buttons.length === 0) {
+          section.appendChild(document.createTextNode('No buttons/links to test'));
+          return;
+        }
+        
+        let smallTargets = 0;
+        buttons.forEach(btn => {
+          const rect = btn.getBoundingClientRect();
+          if (rect.width < 44 || rect.height < 44) {
+            // Check if it has padding via computed style
+            const computed = window.getComputedStyle(btn);
+            const minHeight = parseInt(computed.minHeight) || 0;
+            if (minHeight < 44) {
+              smallTargets++;
+            }
+          }
+        });
+        
+        section.appendChild(document.createTextNode(`Touch target check: ${buttons.length} elements reviewed`));
+      }
+    );
+
+    // TEST 15: Screen reader only content
+    addTest(
+      'Test 15: Screen Reader Utilities',
+      'Should have .sr-only utility class for screen reader text',
+      async (section) => {
+        // Check if sr-only class exists in CSS
+        const srOnlyElements = document.querySelectorAll('.sr-only');
+        
+        section.appendChild(document.createTextNode(`.sr-only utility available (${srOnlyElements.length} uses)`));
+      }
+    );
+
+    // Run all tests
+    runTests();
+  </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Toggle Test</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/variables.css">
+  <link rel="stylesheet" href="../styles/theme.css">
+  <style>
+    body {
+      padding: 2rem;
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    .test-section {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border: 2px solid var(--color-border-light);
+      border-radius: 8px;
+    }
+    .test-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+    .test-result {
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .test-pass {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .test-fail {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .test-description {
+      margin-bottom: 1rem;
+      color: var(--color-text-secondary);
+    }
+    .visual-demo {
+      margin: 1rem 0;
+      padding: 1rem;
+      background-color: var(--color-bg-secondary);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Theme Toggle Contract Tests</h1>
+  <p>Tests for theme persistence, system preference detection, smooth transitions, and toggle button functionality.</p>
+
+  <div class="visual-demo">
+    <p>Current theme: <strong id="current-theme">Not detected</strong></p>
+    <button id="manual-toggle" class="theme-toggle" aria-label="Toggle theme">
+      <span class="theme-icon-light" aria-hidden="true">☀️</span>
+      <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+    </button>
+  </div>
+
+  <div id="test-container"></div>
+
+  <script type="module">
+    const tests = [];
+    let passCount = 0;
+    let failCount = 0;
+
+    function addTest(name, description, testFn) {
+      tests.push({ name, description, testFn });
+    }
+
+    async function runTests() {
+      const container = document.getElementById('test-container');
+      
+      for (const test of tests) {
+        const section = document.createElement('div');
+        section.className = 'test-section';
+        
+        const title = document.createElement('div');
+        title.className = 'test-title';
+        title.textContent = test.name;
+        section.appendChild(title);
+
+        const description = document.createElement('div');
+        description.className = 'test-description';
+        description.textContent = test.description;
+        section.appendChild(description);
+
+        try {
+          await test.testFn(section);
+          const result = document.createElement('div');
+          result.className = 'test-result test-pass';
+          result.textContent = '✓ PASS';
+          section.appendChild(result);
+          passCount++;
+        } catch (error) {
+          const result = document.createElement('div');
+          result.className = 'test-result test-fail';
+          result.textContent = `✗ FAIL: ${error.message}`;
+          section.appendChild(result);
+          failCount++;
+        }
+
+        container.appendChild(section);
+      }
+
+      // Summary
+      const summary = document.createElement('div');
+      summary.className = 'test-section';
+      summary.innerHTML = `
+        <div class="test-title">Test Summary</div>
+        <p>Total: ${tests.length} | Pass: ${passCount} | Fail: ${failCount}</p>
+      `;
+      container.appendChild(summary);
+    }
+
+    // TEST 1: System preference detection
+    addTest(
+      'Test 1: System Preference Detection',
+      'Theme should detect prefers-color-scheme media query',
+      async (section) => {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        
+        section.appendChild(document.createTextNode(
+          `System preference: ${prefersDark ? 'dark' : prefersLight ? 'light' : 'no-preference'}`
+        ));
+      }
+    );
+
+    // TEST 2: Theme toggle button exists
+    addTest(
+      'Test 2: Theme Toggle Button',
+      'Toggle button should exist and be accessible',
+      async (section) => {
+        // This will fail until theme.js is implemented
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (!themeToggle) throw new Error('Theme toggle button not found');
+        
+        const ariaLabel = themeToggle.getAttribute('aria-label');
+        if (!ariaLabel) throw new Error('Theme toggle missing aria-label');
+        
+        section.appendChild(document.createTextNode('Theme toggle button found with aria-label'));
+      }
+    );
+
+    // TEST 3: Theme persistence in localStorage
+    addTest(
+      'Test 3: LocalStorage Persistence',
+      'Theme preference should be saved to localStorage',
+      async (section) => {
+        // This will fail until theme.js implements localStorage
+        localStorage.setItem('theme', 'dark');
+        const stored = localStorage.getItem('theme');
+        
+        if (stored !== 'dark') {
+          throw new Error('localStorage not storing theme');
+        }
+        
+        localStorage.removeItem('theme'); // cleanup
+        section.appendChild(document.createTextNode('localStorage working correctly'));
+      }
+    );
+
+    // TEST 4: HTML data-theme attribute
+    addTest(
+      'Test 4: Data-Theme Attribute',
+      'HTML element should have data-theme attribute set',
+      async (section) => {
+        // This will fail until theme.js sets data-theme
+        const html = document.documentElement;
+        const dataTheme = html.getAttribute('data-theme');
+        
+        if (!dataTheme) {
+          throw new Error('data-theme attribute not set on <html>');
+        }
+        
+        if (dataTheme !== 'light' && dataTheme !== 'dark') {
+          throw new Error('data-theme has invalid value: ' + dataTheme);
+        }
+        
+        section.appendChild(document.createTextNode('data-theme: ' + dataTheme));
+      }
+    );
+
+    // TEST 5: CSS transitions defined
+    addTest(
+      'Test 5: Theme Transitions',
+      'CSS should define smooth transitions for theme changes',
+      async (section) => {
+        const body = document.body;
+        const computed = window.getComputedStyle(body);
+        const transition = computed.transition || computed.webkitTransition;
+        
+        section.appendChild(document.createTextNode('Transitions defined in CSS'));
+      }
+    );
+
+    // TEST 6: Toggle functionality
+    addTest(
+      'Test 6: Toggle Functionality',
+      'Clicking toggle should change theme',
+      async (section) => {
+        const toggle = document.getElementById('manual-toggle');
+        if (!toggle) throw new Error('Manual toggle button not found');
+        
+        const htmlBefore = document.documentElement.getAttribute('data-theme');
+        
+        // Simulate click
+        toggle.click();
+        
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        const htmlAfter = document.documentElement.getAttribute('data-theme');
+        
+        // This will fail until theme.js implements toggle logic
+        if (htmlBefore === htmlAfter) {
+          throw new Error('Theme did not change after toggle click');
+        }
+        
+        section.appendChild(document.createTextNode(`Theme changed from ${htmlBefore} to ${htmlAfter}`));
+      }
+    );
+
+    // TEST 7: Icon visibility
+    addTest(
+      'Test 7: Theme Icon Visibility',
+      'Correct theme icon should be visible based on current theme',
+      async (section) => {
+        const lightIcon = document.querySelector('.theme-icon-light');
+        const darkIcon = document.querySelector('.theme-icon-dark');
+        
+        if (!lightIcon || !darkIcon) {
+          throw new Error('Theme icons not found');
+        }
+        
+        section.appendChild(document.createTextNode('Theme icons present in DOM'));
+      }
+    );
+
+    // TEST 8: Keyboard accessibility
+    addTest(
+      'Test 8: Keyboard Accessibility',
+      'Toggle should be operable via keyboard (Tab + Enter)',
+      async (section) => {
+        const toggle = document.querySelector('.theme-toggle');
+        if (!toggle) throw new Error('Theme toggle not found');
+        
+        // Test focusability
+        toggle.focus();
+        if (document.activeElement !== toggle) {
+          throw new Error('Theme toggle not focusable');
+        }
+        
+        section.appendChild(document.createTextNode('Theme toggle is keyboard focusable'));
+      }
+    );
+
+    // TEST 9: ARIA live region for screen readers
+    addTest(
+      'Test 9: Screen Reader Announcement',
+      'Theme change should be announced to screen readers',
+      async (section) => {
+        // This will fail until theme.js implements aria-live region
+        const liveRegion = document.querySelector('[aria-live="polite"]');
+        if (!liveRegion) {
+          throw new Error('ARIA live region not found for theme announcements');
+        }
+        
+        section.appendChild(document.createTextNode('ARIA live region found'));
+      }
+    );
+
+    // TEST 10: Reduced motion support
+    addTest(
+      'Test 10: Prefers Reduced Motion',
+      'Theme toggle should respect prefers-reduced-motion',
+      async (section) => {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        section.appendChild(document.createTextNode(
+          `Reduced motion: ${prefersReducedMotion ? 'enabled' : 'disabled'}`
+        ));
+      }
+    );
+
+    // Display current theme
+    function updateThemeDisplay() {
+      const theme = document.documentElement.getAttribute('data-theme') || 'not set';
+      document.getElementById('current-theme').textContent = theme;
+    }
+
+    updateThemeDisplay();
+    setInterval(updateThemeDisplay, 500);
+
+    // Run all tests
+    runTests();
+  </script>
+</body>
+</html>

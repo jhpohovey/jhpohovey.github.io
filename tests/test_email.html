@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Obfuscation Test</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/variables.css">
+  <style>
+    body {
+      padding: 2rem;
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .test-section {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border: 2px solid var(--color-border-light);
+      border-radius: 8px;
+    }
+    .test-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+    .test-result {
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .test-pass {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .test-fail {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .test-description {
+      margin-bottom: 1rem;
+      color: var(--color-text-secondary);
+    }
+    .demo-section {
+      margin: 1rem 0;
+      padding: 1rem;
+      background-color: var(--color-bg-secondary);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Email Obfuscation Contract Tests</h1>
+  <p>Tests for ROT13 obfuscation, client-side deobfuscation, and accessibility.</p>
+
+  <div class="demo-section">
+    <h2>Demo Email Link</h2>
+    <p>This should be replaced by email.js:</p>
+    <!-- This will be populated by email.js -->
+    <span class="email-link" 
+          data-user="wbirebl" 
+          data-domain="rznvy.pbz">
+      [Email will appear here when deobfuscated]
+    </span>
+  </div>
+
+  <div id="test-container"></div>
+
+  <script type="module">
+    const tests = [];
+    let passCount = 0;
+    let failCount = 0;
+
+    function addTest(name, description, testFn) {
+      tests.push({ name, description, testFn });
+    }
+
+    async function runTests() {
+      const container = document.getElementById('test-container');
+      
+      for (const test of tests) {
+        const section = document.createElement('div');
+        section.className = 'test-section';
+        
+        const title = document.createElement('div');
+        title.className = 'test-title';
+        title.textContent = test.name;
+        section.appendChild(title);
+
+        const description = document.createElement('div');
+        description.className = 'test-description';
+        description.textContent = test.description;
+        section.appendChild(description);
+
+        try {
+          await test.testFn(section);
+          const result = document.createElement('div');
+          result.className = 'test-result test-pass';
+          result.textContent = '✓ PASS';
+          section.appendChild(result);
+          passCount++;
+        } catch (error) {
+          const result = document.createElement('div');
+          result.className = 'test-result test-fail';
+          result.textContent = `✗ FAIL: ${error.message}`;
+          section.appendChild(result);
+          failCount++;
+        }
+
+        container.appendChild(section);
+      }
+
+      // Summary
+      const summary = document.createElement('div');
+      summary.className = 'test-section';
+      summary.innerHTML = `
+        <div class="test-title">Test Summary</div>
+        <p>Total: ${tests.length} | Pass: ${passCount} | Fail: ${failCount}</p>
+      `;
+      container.appendChild(summary);
+    }
+
+    // TEST 1: ROT13 function exists
+    addTest(
+      'Test 1: ROT13 Function',
+      'Should have rot13() function available',
+      async (section) => {
+        // This will fail until email.js is implemented
+        if (typeof window.rot13 !== 'function') {
+          throw new Error('rot13 function not defined in global scope');
+        }
+        
+        section.appendChild(document.createTextNode('rot13 function exists'));
+      }
+    );
+
+    // TEST 2: ROT13 encoding/decoding
+    addTest(
+      'Test 2: ROT13 Encoding',
+      'ROT13 should correctly encode and decode text',
+      async (section) => {
+        // Manual ROT13 for testing
+        function testRot13(str) {
+          return str.replace(/[a-zA-Z]/g, char => {
+            const start = char <= 'Z' ? 65 : 97;
+            return String.fromCharCode(start + (char.charCodeAt(0) - start + 13) % 26);
+          });
+        }
+        
+        const original = 'contact';
+        const encoded = testRot13(original);
+        const decoded = testRot13(encoded);
+        
+        if (decoded !== original) {
+          throw new Error('ROT13 encoding/decoding failed');
+        }
+        
+        section.appendChild(document.createTextNode(`${original} → ${encoded} → ${decoded}`));
+      }
+    );
+
+    // TEST 3: Email elements exist
+    addTest(
+      'Test 3: Email Link Elements',
+      'Should find email link elements with data attributes',
+      async (section) => {
+        const emailLinks = document.querySelectorAll('.email-link[data-user][data-domain]');
+        if (emailLinks.length === 0) {
+          throw new Error('No email link elements found');
+        }
+        
+        section.appendChild(document.createTextNode(`Found ${emailLinks.length} email link(s)`));
+      }
+    );
+
+    // TEST 4: Data attributes present
+    addTest(
+      'Test 4: Obfuscated Data Attributes',
+      'Email elements should have data-user and data-domain attributes',
+      async (section) => {
+        const emailLink = document.querySelector('.email-link');
+        if (!emailLink) throw new Error('No email link found');
+        
+        const user = emailLink.getAttribute('data-user');
+        const domain = emailLink.getAttribute('data-domain');
+        
+        if (!user || !domain) {
+          throw new Error('Missing data-user or data-domain attributes');
+        }
+        
+        section.appendChild(document.createTextNode(`user: ${user}, domain: ${domain}`));
+      }
+    );
+
+    // TEST 5: Deobfuscation on page load
+    addTest(
+      'Test 5: Automatic Deobfuscation',
+      'Email links should be deobfuscated on page load',
+      async (section) => {
+        // This will fail until email.js implements deobfuscation
+        const emailLink = document.querySelector('.email-link');
+        if (!emailLink) throw new Error('No email link found');
+        
+        const href = emailLink.getAttribute('href');
+        if (!href || !href.startsWith('mailto:')) {
+          throw new Error('Email link not deobfuscated (no mailto: href)');
+        }
+        
+        section.appendChild(document.createTextNode(`Deobfuscated: ${href}`));
+      }
+    );
+
+    // TEST 6: Clickable email link
+    addTest(
+      'Test 6: Clickable Link',
+      'Deobfuscated email should be a clickable <a> element',
+      async (section) => {
+        const emailLink = document.querySelector('.email-link');
+        if (!emailLink) throw new Error('No email link found');
+        
+        // After deobfuscation, should be or contain an <a> element
+        const anchor = emailLink.tagName === 'A' ? emailLink : emailLink.querySelector('a');
+        if (!anchor) {
+          throw new Error('Email link is not clickable (not an <a> element)');
+        }
+        
+        section.appendChild(document.createTextNode('Email link is clickable'));
+      }
+    );
+
+    // TEST 7: No plain email in HTML source
+    addTest(
+      'Test 7: HTML Source Obfuscation',
+      'Plain email address should not appear in initial HTML',
+      async (section) => {
+        const bodyHTML = document.body.innerHTML;
+        
+        // Check that plain email doesn't appear
+        if (bodyHTML.includes('contact@email.com') || bodyHTML.includes('hovey@')) {
+          throw new Error('Plain email found in HTML source');
+        }
+        
+        section.appendChild(document.createTextNode('Email not exposed in HTML source'));
+      }
+    );
+
+    // TEST 8: Accessibility - visible text
+    addTest(
+      'Test 8: Visible Email Text',
+      'Email should be visible to users after deobfuscation',
+      async (section) => {
+        const emailLink = document.querySelector('.email-link');
+        if (!emailLink) throw new Error('No email link found');
+        
+        const text = emailLink.textContent.trim();
+        if (!text || text === '[Email will appear here when deobfuscated]') {
+          throw new Error('Email text not rendered after deobfuscation');
+        }
+        
+        section.appendChild(document.createTextNode(`Visible text: ${text}`));
+      }
+    );
+
+    // TEST 9: Multiple email links
+    addTest(
+      'Test 9: Multiple Email Links',
+      'Should handle multiple email links on same page',
+      async (section) => {
+        // Add another email link for testing
+        const container = document.createElement('div');
+        container.innerHTML = '<span class="email-link" data-user="test" data-domain="example.pbz"></span>';
+        document.body.appendChild(container);
+        
+        const emailLinks = document.querySelectorAll('.email-link');
+        section.appendChild(document.createTextNode(`Total email links: ${emailLinks.length}`));
+        
+        // Cleanup
+        container.remove();
+      }
+    );
+
+    // TEST 10: JavaScript disabled fallback
+    addTest(
+      'Test 10: No-JS Fallback',
+      'Should have graceful degradation when JS is disabled',
+      async (section) => {
+        // This test just checks that noscript content exists
+        const noscript = document.querySelector('noscript');
+        
+        if (!noscript) {
+          section.appendChild(document.createTextNode('Warning: No <noscript> fallback found'));
+        } else {
+          section.appendChild(document.createTextNode('Noscript fallback present'));
+        }
+      }
+    );
+
+    // Run all tests
+    runTests();
+  </script>
+</body>
+</html>

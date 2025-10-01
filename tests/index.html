@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Runner - Academic Website Tests</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .test-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .test-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .test-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+    }
+
+    .test-description {
+      color: #718096;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+
+    .test-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .status-pending {
+      background: #edf2f7;
+      color: #4a5568;
+    }
+
+    .status-running {
+      background: #fef5e7;
+      color: #d97706;
+      animation: pulse 2s infinite;
+    }
+
+    .status-pass {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-fail {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .test-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #667eea;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #5568d3;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #4a5568;
+    }
+
+    .btn-secondary:hover {
+      background: #cbd5e0;
+    }
+
+    .summary {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      margin-bottom: 2rem;
+    }
+
+    .summary-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #2d3748;
+      margin-bottom: 1rem;
+    }
+
+    .summary-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .stat {
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: #718096;
+    }
+
+    .stat-total {
+      background: #edf2f7;
+    }
+
+    .stat-pass {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .stat-fail {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .stat-pending {
+      background: #fef5e7;
+      color: #d97706;
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .btn-large {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+    }
+
+    .info-box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #667eea;
+    }
+
+    .info-box h2 {
+      font-size: 1.2rem;
+      color: #2d3748;
+      margin-bottom: 0.5rem;
+    }
+
+    .info-box p {
+      color: #4a5568;
+      line-height: 1.6;
+    }
+
+    .test-category {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Academic Website Test Suite</h1>
+    <p class="subtitle">TDD Contract & Integration Tests</p>
+
+    <div class="info-box">
+      <h2>About These Tests</h2>
+      <p>
+        This test suite follows <strong>Test-Driven Development (TDD)</strong> principles. 
+        All tests are designed to <strong>FAIL initially</strong> until the corresponding features are implemented.
+        Run each test to verify contracts and integration points. Tests must pass before proceeding to the next phase.
+      </p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary btn-large" onclick="runAllTests()">▶️ Run All Tests</button>
+      <button class="btn btn-secondary btn-large" onclick="resetTests()">🔄 Reset</button>
+    </div>
+
+    <div class="summary">
+      <div class="summary-title">Test Summary</div>
+      <div class="summary-stats">
+        <div class="stat stat-total">
+          <div class="stat-value" id="total-tests">7</div>
+          <div class="stat-label">Total Tests</div>
+        </div>
+        <div class="stat stat-pass">
+          <div class="stat-value" id="passed-tests">0</div>
+          <div class="stat-label">Passed</div>
+        </div>
+        <div class="stat stat-fail">
+          <div class="stat-value" id="failed-tests">0</div>
+          <div class="stat-label">Failed</div>
+        </div>
+        <div class="stat stat-pending">
+          <div class="stat-value" id="pending-tests">7</div>
+          <div class="stat-label">Pending</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="test-grid" id="test-grid">
+      <!-- Navigation Tests -->
+      <div class="test-card" data-test="navigation">
+        <div class="test-category">Component</div>
+        <div class="test-title">Navigation</div>
+        <div class="test-description">
+          Tests navigation rendering, keyboard accessibility, active page indicators, and responsive behavior.
+        </div>
+        <div class="test-status status-pending">
+          <span>⏸️ Pending</span>
+        </div>
+        <div class="test-actions">
+          <a href="test_navigation.html" class="btn btn-primary" target="_blank">Run Test</a>
+          <button class="btn btn-secondary" onclick="markComplete('navigation')">✓ Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Theme Toggle Tests -->
+      <div class="test-card" data-test="theme">
+        <div class="test-category">Feature</div>
+        <div class="test-title">Theme Toggle</div>
+        <div class="test-description">
+          Tests light/dark mode toggle, localStorage persistence, system preference detection, and transitions.
+        </div>
+        <div class="test-status status-pending">
+          <span>⏸️ Pending</span>
+        </div>
+        <div class="test-actions">
+          <a href="test_theme.html" class="btn btn-primary" target="_blank">Run Test</a>
+          <button class="btn btn-secondary" onclick="markComplete('theme')">✓ Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Publications Tests -->
+      <div class="test-card" data-test="publications">
+        <div class="test-category">Feature</div>
+        <div class="test-title">Publications</div>
+        <div class="test-description">
+          Tests publication rendering, author highlighting, sorting/filtering, thumbnail hover animations.
+        </div>
+        <div class="test-status status-pending">
+          <span>⏸️ Pending</span>
+        </div>
+        <div class="test-actions">
+          <a href="test_publications.html" class="btn btn-primary" target="_blank">Run Test</a>
+          <button class="btn btn-secondary" onclick="markComplete('publications')">✓ Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Email Obfuscation Tests -->
+      <div class="test-card" data-test="email">
+        <div class="test-category">Security</div>
+        <div class="test-title">Email Obfuscation</div>
+        <div class="test-description">
+          Tests ROT13 obfuscation, client-side deobfuscation, and accessibility of email links.
+        </div>
+        <div class="test-status status-pending">
+          <span>⏸️ Pending</span>
+        </div>
+        <div class="test-actions">
+          <a href="test_email.html" class="btn btn-primary" target="_blank">Run Test</a>
+          <button class="btn btn-secondary" onclick="markComplete('email')">✓ Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Accessibility Tests -->
+      <div class="test-card" data-test="accessibility">
+        <div class="test-category">WCAG 2.1 AA</div>
+        <div class="test-title">Accessibility</div>
+        <div class="test-description">
+          Tests WCAG compliance, semantic HTML, ARIA attributes, keyboard navigation, and screen reader support.
+        </div>
+        <div class="test-status status-pending">
+          <span>⏸️ Pending</span>
+        </div>
+        <div class="test-actions">
+          <a href="test_accessibility.html" class="btn btn-primary" target="_blank">Run Test</a>
+          <button class="btn btn-secondary" onclick="markComplete('accessibility')">✓ Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Responsive Design Tests -->
+      <div class="test-card" data-test="responsive">
+        <div class="test-category">Responsive</div>
+        <div class="test-title">Responsive Design</div>
+        <div class="test-description">
+          Tests viewport meta tag, breakpoints, fluid typography, responsive images, touch targets.
+        </div>
+        <div class="test-status status-pending">
+          <span>⏸️ Pending</span>
+        </div>
+        <div class="test-actions">
+          <a href="test_responsive.html" class="btn btn-primary" target="_blank">Run Test</a>
+          <button class="btn btn-secondary" onclick="markComplete('responsive')">✓ Mark Complete</button>
+        </div>
+      </div>
+
+      <!-- Performance Tests -->
+      <div class="test-card" data-test="performance">
+        <div class="test-category">Performance</div>
+        <div class="test-title">Performance Budget</div>
+        <div class="test-description">
+          Tests page size (<500KB), CSS/JS size (<50KB each), load time (<1.5s), and resource optimization.
+        </div>
+        <div class="test-status status-pending">
+          <span>⏸️ Pending</span>
+        </div>
+        <div class="test-actions">
+          <a href="test_performance.html" class="btn btn-primary" target="_blank">Run Test</a>
+          <button class="btn btn-secondary" onclick="markComplete('performance')">✓ Mark Complete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load test status from localStorage
+    function loadTestStatus() {
+      const status = JSON.parse(localStorage.getItem('test-status') || '{}');
+      Object.keys(status).forEach(testName => {
+        updateTestStatus(testName, status[testName]);
+      });
+      updateSummary();
+    }
+
+    // Save test status to localStorage
+    function saveTestStatus(testName, status) {
+      const allStatus = JSON.parse(localStorage.getItem('test-status') || '{}');
+      allStatus[testName] = status;
+      localStorage.setItem('test-status', JSON.stringify(allStatus));
+    }
+
+    // Update test status visually
+    function updateTestStatus(testName, status) {
+      const card = document.querySelector(`[data-test="${testName}"]`);
+      if (!card) return;
+
+      const statusEl = card.querySelector('.test-status');
+      statusEl.className = 'test-status';
+
+      if (status === 'pass') {
+        statusEl.classList.add('status-pass');
+        statusEl.innerHTML = '<span>✓ Passed</span>';
+      } else if (status === 'fail') {
+        statusEl.classList.add('status-fail');
+        statusEl.innerHTML = '<span>✗ Failed</span>';
+      } else if (status === 'running') {
+        statusEl.classList.add('status-running');
+        statusEl.innerHTML = '<span>⏳ Running...</span>';
+      } else {
+        statusEl.classList.add('status-pending');
+        statusEl.innerHTML = '<span>⏸️ Pending</span>';
+      }
+
+      updateSummary();
+    }
+
+    // Mark test as complete
+    function markComplete(testName) {
+      const newStatus = confirm('Did the test PASS?') ? 'pass' : 'fail';
+      saveTestStatus(testName, newStatus);
+      updateTestStatus(testName, newStatus);
+    }
+
+    // Update summary statistics
+    function updateSummary() {
+      const allStatus = JSON.parse(localStorage.getItem('test-status') || '{}');
+      const passed = Object.values(allStatus).filter(s => s === 'pass').length;
+      const failed = Object.values(allStatus).filter(s => s === 'fail').length;
+      const pending = 7 - passed - failed;
+
+      document.getElementById('passed-tests').textContent = passed;
+      document.getElementById('failed-tests').textContent = failed;
+      document.getElementById('pending-tests').textContent = pending;
+    }
+
+    // Run all tests
+    function runAllTests() {
+      const tests = ['navigation', 'theme', 'publications', 'email', 'accessibility', 'responsive', 'performance'];
+      
+      if (!confirm('This will open 7 test pages in new tabs. Continue?')) {
+        return;
+      }
+
+      tests.forEach((test, index) => {
+        setTimeout(() => {
+          window.open(`test_${test}.html`, `_test_${test}`);
+        }, index * 500);
+      });
+    }
+
+    // Reset all tests
+    function resetTests() {
+      if (confirm('Reset all test statuses?')) {
+        localStorage.removeItem('test-status');
+        location.reload();
+      }
+    }
+
+    // Load status on page load
+    loadTestStatus();
+  </script>
+</body>
+</html>

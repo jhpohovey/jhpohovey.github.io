@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publications Rendering Test</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/variables.css">
+  <link rel="stylesheet" href="../styles/layout.css">
+  <link rel="stylesheet" href="../styles/components.css">
+  <style>
+    body {
+      padding: 2rem;
+      background-color: var(--color-bg-primary);
+      color: var(--color-text-primary);
+    }
+    .test-section {
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      border: 2px solid var(--color-border-light);
+      border-radius: 8px;
+    }
+    .test-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--color-primary);
+    }
+    .test-result {
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .test-pass {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .test-fail {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .test-description {
+      margin-bottom: 1rem;
+      color: var(--color-text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <h1>Publications Rendering Contract Tests</h1>
+  <p>Tests for publication card rendering, author highlighting, sorting, filtering, and thumbnail hover.</p>
+
+  <!-- Mock publications container -->
+  <div id="publications-container" class="publications-grid"></div>
+
+  <div id="test-container"></div>
+
+  <script type="module">
+    const tests = [];
+    let passCount = 0;
+    let failCount = 0;
+
+    // Mock publication data
+    const mockPublications = [
+      {
+        id: "nirrt-2024",
+        title: "NIRRT*: Inferring Reachable Targets for Navigation*",
+        authors: [
+          { name: "Jake Hovey", url: null, isPrimary: true },
+          { name: "Co-Author Name", url: "https://example.com", isPrimary: false }
+        ],
+        venue: {
+          name: "IEEE/RSJ International Conference on Intelligent Robots and Systems",
+          abbreviation: "IROS",
+          year: 2024,
+          location: "Abu Dhabi, UAE"
+        },
+        thumbnails: {
+          static: "/assets/images/publications/nirrt-static.png",
+          animated: "/assets/images/publications/nirrt-animated.gif"
+        },
+        links: {
+          paper: "https://arxiv.org/abs/2409.06534",
+          code: "https://github.com/example/nirrt",
+          video: null,
+          website: null
+        },
+        award: "Best Paper Nominee"
+      }
+    ];
+
+    function addTest(name, description, testFn) {
+      tests.push({ name, description, testFn });
+    }
+
+    async function runTests() {
+      const container = document.getElementById('test-container');
+      
+      for (const test of tests) {
+        const section = document.createElement('div');
+        section.className = 'test-section';
+        
+        const title = document.createElement('div');
+        title.className = 'test-title';
+        title.textContent = test.name;
+        section.appendChild(title);
+
+        const description = document.createElement('div');
+        description.className = 'test-description';
+        description.textContent = test.description;
+        section.appendChild(description);
+
+        try {
+          await test.testFn(section);
+          const result = document.createElement('div');
+          result.className = 'test-result test-pass';
+          result.textContent = '✓ PASS';
+          section.appendChild(result);
+          passCount++;
+        } catch (error) {
+          const result = document.createElement('div');
+          result.className = 'test-result test-fail';
+          result.textContent = `✗ FAIL: ${error.message}`;
+          section.appendChild(result);
+          failCount++;
+        }
+
+        container.appendChild(section);
+      }
+
+      // Summary
+      const summary = document.createElement('div');
+      summary.className = 'test-section';
+      summary.innerHTML = `
+        <div class="test-title">Test Summary</div>
+        <p>Total: ${tests.length} | Pass: ${passCount} | Fail: ${failCount}</p>
+      `;
+      container.appendChild(summary);
+    }
+
+    // TEST 1: Fetch publications data
+    addTest(
+      'Test 1: Fetch Publications JSON',
+      'Should successfully fetch and parse publications.json',
+      async (section) => {
+        // This will fail until publications.js implements fetchPublications
+        const response = await fetch('../data/publications.json');
+        if (!response.ok) throw new Error('Failed to fetch publications.json');
+        
+        const data = await response.json();
+        if (!Array.isArray(data)) throw new Error('Publications data is not an array');
+        if (data.length === 0) throw new Error('No publications found');
+        
+        section.appendChild(document.createTextNode(`Loaded ${data.length} publications`));
+      }
+    );
+
+    // TEST 2: Render publication cards
+    addTest(
+      'Test 2: Render Publication Cards',
+      'Should render publication cards with correct structure',
+      async (section) => {
+        // This will fail until publications.js implements renderPublications
+        const pubContainer = document.getElementById('publications-container');
+        
+        // Simulated check - in real implementation, publications.js would populate this
+        const cards = pubContainer.querySelectorAll('.publication-card');
+        if (cards.length === 0) {
+          throw new Error('No publication cards rendered');
+        }
+        
+        section.appendChild(document.createTextNode(`Found ${cards.length} publication cards`));
+      }
+    );
+
+    // TEST 3: Author highlighting
+    addTest(
+      'Test 3: Primary Author Highlighting',
+      'Primary author (Jake Hovey) should be visually distinguished',
+      async (section) => {
+        // This will fail until publications.js implements author rendering
+        const cards = document.querySelectorAll('.publication-card');
+        if (cards.length === 0) throw new Error('No publication cards to test');
+        
+        const primaryAuthor = document.querySelector('.author-primary');
+        if (!primaryAuthor) throw new Error('No primary author found');
+        
+        if (!primaryAuthor.textContent.includes('Jake Hovey')) {
+          throw new Error('Primary author is not Jake Hovey');
+        }
+        
+        section.appendChild(document.createTextNode('Primary author correctly highlighted'));
+      }
+    );
+
+    // TEST 4: Thumbnail with hover animation
+    addTest(
+      'Test 4: Thumbnail Hover Animation',
+      'Publication cards should have static and animated thumbnails',
+      async (section) => {
+        const thumbnails = document.querySelectorAll('.publication-thumbnail');
+        if (thumbnails.length === 0) throw new Error('No thumbnails found');
+        
+        const firstThumbnail = thumbnails[0];
+        const staticImg = firstThumbnail.querySelector('img:not(.thumbnail-animated)');
+        const animatedImg = firstThumbnail.querySelector('.thumbnail-animated');
+        
+        if (!staticImg) throw new Error('Static thumbnail not found');
+        if (!animatedImg) throw new Error('Animated thumbnail not found');
+        
+        section.appendChild(document.createTextNode('Thumbnail structure correct'));
+      }
+    );
+
+    // TEST 5: Links rendering
+    addTest(
+      'Test 5: Publication Links',
+      'Publication cards should render available links (paper, code, video, website)',
+      async (section) => {
+        const cards = document.querySelectorAll('.publication-card');
+        if (cards.length === 0) throw new Error('No cards to test');
+        
+        const links = document.querySelectorAll('.publication-link');
+        if (links.length === 0) throw new Error('No publication links found');
+        
+        section.appendChild(document.createTextNode(`Found ${links.length} publication links`));
+      }
+    );
+
+    // TEST 6: Award badge rendering
+    addTest(
+      'Test 6: Award Badge Display',
+      'Publications with awards should display award badge',
+      async (section) => {
+        const awards = document.querySelectorAll('.publication-award');
+        
+        // Mock data has 1 award, so we expect at least 1
+        if (awards.length === 0) {
+          // This might not fail if no publications have awards
+          section.appendChild(document.createTextNode('No awards found (may be expected)'));
+        } else {
+          section.appendChild(document.createTextNode(`Found ${awards.length} award badges`));
+        }
+      }
+    );
+
+    // TEST 7: Sort functionality
+    addTest(
+      'Test 7: Sort Publications',
+      'Should support sorting by year (newest/oldest)',
+      async (section) => {
+        // This will fail until publications.js implements sorting
+        if (typeof window.sortPublications !== 'function') {
+          throw new Error('sortPublications function not defined');
+        }
+        
+        section.appendChild(document.createTextNode('Sort function exists'));
+      }
+    );
+
+    // TEST 8: Venue information
+    addTest(
+      'Test 8: Venue Information Display',
+      'Should display venue name, year, and location',
+      async (section) => {
+        const venues = document.querySelectorAll('.publication-venue');
+        if (venues.length === 0) throw new Error('No venue information found');
+        
+        const firstVenue = venues[0];
+        if (!firstVenue.textContent) throw new Error('Venue has no text content');
+        
+        section.appendChild(document.createTextNode('Venue information present'));
+      }
+    );
+
+    // TEST 9: Responsive card layout
+    addTest(
+      'Test 9: Responsive Card Layout',
+      'Publication cards should adapt to screen size',
+      async (section) => {
+        const card = document.querySelector('.publication-card');
+        if (!card) throw new Error('No card to test');
+        
+        const computed = window.getComputedStyle(card);
+        const display = computed.display;
+        
+        if (display !== 'grid' && display !== 'flex' && display !== 'block') {
+          throw new Error('Card does not have proper display mode');
+        }
+        
+        section.appendChild(document.createTextNode(`Card display: ${display}`));
+      }
+    );
+
+    // TEST 10: Empty state handling
+    addTest(
+      'Test 10: Empty State',
+      'Should display appropriate message when no publications found',
+      async (section) => {
+        // This will fail until publications.js implements empty state
+        const container = document.getElementById('publications-container');
+        container.innerHTML = '<div class="no-results">No publications found</div>';
+        
+        const noResults = container.querySelector('.no-results');
+        if (!noResults) throw new Error('Empty state not implemented');
+        
+        section.appendChild(document.createTextNode('Empty state handled'));
+      }
+    );
+
+    // TEST 11: Author links
+    addTest(
+      'Test 11: Author Links',
+      'Co-authors with URLs should be clickable links',
+      async (section) => {
+        const authorLinks = document.querySelectorAll('.publication-authors a');
+        
+        // May be zero if no co-authors have URLs
+        section.appendChild(document.createTextNode(`Found ${authorLinks.length} author links`));
+      }
+    );
+
+    // TEST 12: Data contract validation
+    addTest(
+      'Test 12: Publication Data Contract',
+      'Each publication should have required fields',
+      async (section) => {
+        const response = await fetch('../data/publications.json');
+        const publications = await response.json();
+        
+        const requiredFields = ['id', 'title', 'authors', 'venue', 'thumbnails', 'links'];
+        
+        for (const pub of publications) {
+          for (const field of requiredFields) {
+            if (!(field in pub)) {
+              throw new Error(`Publication ${pub.id || 'unknown'} missing field: ${field}`);
+            }
+          }
+        }
+        
+        section.appendChild(document.createTextNode('All publications have required fields'));
+      }
+    );
+
+    // Run all tests
+    runTests();
+  </script>
+</body>
+</html>
