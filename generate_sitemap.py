@@ -18,7 +18,7 @@ for url in urls:
     # part of the spec, but google ignores in crawl https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
     sitemap_content += f'    <changefreq>monthly</changefreq>\n' 
     sitemap_content += f'    <priority>1.0</priority>\n'
-    sitemap_content += f'  </url>'
+    sitemap_content += f'  </url>\n'
 
 sitemap_content += f'</urlset>\n'
 
