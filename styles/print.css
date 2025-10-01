@@ -1,0 +1,300 @@
+/*
+ * Print Styles
+ * Optimized styles for printing
+ */
+
+@media print {
+  /* ========================================
+     General Print Settings
+     ======================================== */
+  
+  *,
+  *::before,
+  *::after {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html {
+    font-size: 12pt;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+  }
+
+  /* ========================================
+     Page Settings
+     ======================================== */
+  
+  @page {
+    margin: 2cm;
+    size: letter;
+  }
+
+  /* ========================================
+     Hide Non-Essential Elements
+     ======================================== */
+  
+  .theme-toggle,
+  .nav,
+  .filter-controls,
+  .skip-link,
+  button:not(.print-keep),
+  video,
+  audio,
+  iframe {
+    display: none !important;
+  }
+
+  /* ========================================
+     Typography for Print
+     ======================================== */
+  
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    font-family: Georgia, 'Times New Roman', serif;
+  }
+
+  h1 {
+    font-size: 24pt;
+    margin-bottom: 0.5cm;
+  }
+
+  h2 {
+    font-size: 18pt;
+    margin-top: 0.5cm;
+    margin-bottom: 0.3cm;
+  }
+
+  h3 {
+    font-size: 14pt;
+    margin-top: 0.4cm;
+    margin-bottom: 0.2cm;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 11pt;
+  }
+
+  /* ========================================
+     Links for Print
+     ======================================== */
+  
+  a {
+    text-decoration: underline;
+    color: black !important;
+  }
+
+  /* Show URLs after links */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+    font-style: italic;
+  }
+
+  /* Don't show URLs for anchor links */
+  a[href^="#"]::after {
+    content: "";
+  }
+
+  /* ========================================
+     Images for Print
+     ======================================== */
+  
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  .portrait {
+    max-width: 4cm;
+    display: block;
+    margin: 0 auto 0.5cm;
+  }
+
+  .publication-thumbnail {
+    max-width: 6cm;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Hide animated thumbnails in print */
+  .thumbnail-animated {
+    display: none !important;
+  }
+
+  /* ========================================
+     Cards & Components for Print
+     ======================================== */
+  
+  .card,
+  .publication-card {
+    border: 1pt solid black !important;
+    page-break-inside: avoid;
+    padding: 0.3cm;
+    margin-bottom: 0.5cm;
+  }
+
+  .publication-card {
+    display: block;
+  }
+
+  .publication-content {
+    margin-top: 0.3cm;
+  }
+
+  /* ========================================
+     Lists for Print
+     ======================================== */
+  
+  ul,
+  ol {
+    page-break-before: avoid;
+  }
+
+  li {
+    page-break-inside: avoid;
+  }
+
+  /* ========================================
+     Tables for Print
+     ======================================== */
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    page-break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  th,
+  td {
+    border: 1pt solid black;
+    padding: 0.2cm;
+  }
+
+  /* ========================================
+     Code Blocks for Print
+     ======================================== */
+  
+  pre,
+  code {
+    font-family: 'Courier New', monospace;
+    font-size: 9pt;
+    page-break-inside: avoid;
+    border: 1pt solid black;
+    padding: 0.2cm;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* ========================================
+     Header/Footer for Print
+     ======================================== */
+  
+  .site-header {
+    border-bottom: 2pt solid black;
+    padding-bottom: 0.3cm;
+    margin-bottom: 0.5cm;
+  }
+
+  .site-footer {
+    border-top: 2pt solid black;
+    padding-top: 0.3cm;
+    margin-top: 1cm;
+    font-size: 9pt;
+  }
+
+  /* ========================================
+     Publication-Specific Print Styles
+     ======================================== */
+  
+  .publication-title {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-bottom: 0.2cm;
+  }
+
+  .publication-authors {
+    font-size: 10pt;
+    margin-bottom: 0.2cm;
+  }
+
+  .publication-venue {
+    font-size: 9pt;
+    font-style: italic;
+    margin-bottom: 0.2cm;
+  }
+
+  .publication-award {
+    border: 1pt solid black;
+    padding: 0.1cm 0.2cm;
+    display: inline-block;
+    margin-bottom: 0.2cm;
+  }
+
+  .publication-links {
+    margin-top: 0.2cm;
+    font-size: 9pt;
+  }
+
+  /* ========================================
+     Bio Section for Print
+     ======================================== */
+  
+  .bio-container {
+    display: block;
+  }
+
+  .bio-text {
+    margin-top: 0.5cm;
+    line-height: 1.6;
+  }
+
+  /* ========================================
+     Utility Overrides for Print
+     ======================================== */
+  
+  .hidden-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  /* Remove transitions and animations */
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* ========================================
+     Page Break Utilities
+     ======================================== */
+  
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  .page-break-avoid {
+    page-break-inside: avoid;
+  }
+}

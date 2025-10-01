@@ -1,3 +1,33 @@
+# Internal Design + Dev Files
+.specify/
+*_STATUS.md
+*_COMPLETE.md
+*_RESULTS.md
+*_CHECKLIST.md
+*_GUIDE.md
+PROGRESS.md
+IMPLEMENTATION_*.md
+VERIFICATION_*.md
+MIGRATION_*.md
+LOCAL_TESTING_*.md
+PRE_DEPLOYMENT_*.md
+MANUAL_TESTING_*.md
+START_HERE.md
+DEPLOYMENT.md
+GITHUB_PAGES_DEPLOYMENT.md
+FEATURE_VIEW_TOGGLE.md
+FINAL_VALIDATION_REPORT.md
+QUICKSTART.md
 
 # System Files
 .DS_Store
+.DS_Store?
+._*
+*~
+
+# Editor Files
+.vscode/
+*.swp
+*.swo
+*.swn
+

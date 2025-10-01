@@ -1,0 +1,231 @@
+{
+  "publications": [
+    {
+      "id": "pohovey2025beyondcanes",
+      "title": "Beyond Canes and Guide Dogs: A Review of 40 Years of Robotics for Wayfinding, Navigating, and Orienting Assistance for People with Visual Impairments",
+      "authors": [
+        {
+          "name": "John Pohovey",
+          "isPrimaryUser": true,
+          "website": "https://jhpohovey.github.io/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Maria Lusardi",
+          "isPrimaryUser": false,
+          "website": "https://mclusardi.github.io/",
+          "equalContributionGroup": "φ"
+        },
+        {
+          "name": "Aamir Hasan",
+          "isPrimaryUser": false,
+          "website": "https://aamzhas.github.io/",
+          "equalContributionGroup": "φ"
+        },
+        {
+          "name": "Shuijing Liu",
+          "isPrimaryUser": false,
+          "website": "https://shuijing725.github.io/",
+          "equalContributionGroup": "ψ"
+        },
+        {
+          "name": "Andre Schreiber",
+          "isPrimaryUser": false,
+          "website": "https://andreschreiber.github.io/",
+          "equalContributionGroup": "ψ"
+        },
+        {
+          "name": "Samuel A. Olatunji",
+          "isPrimaryUser": false,
+          "website": "https://hfaging.ahs.illinois.edu/samuel-olatunji/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Wendy A. Rogers",
+          "isPrimaryUser": false,
+          "website": "https://hfaging.ahs.illinois.edu/wendy-rogers-2/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Katherine Driggs-Campbell",
+          "isPrimaryUser": false,
+          "website": "https://krdc.web.illinois.edu/",
+          "equalContributionGroup": null
+        }
+      ],
+      "venue": {
+        "fullName": "Under Review",
+        "acronym": "Under Review",
+        "type": "preprint"
+      },
+      "year": 2025,
+      "date": "2025-01-01",
+      "status": "under-review",
+      "featured": true,
+      "awards": [],
+      "thumbnail": {
+        "static": "assets/figures/beyond-wayfinding-all.png",
+        "animated": null,
+        "alt": "Visual overview of 40 years of assistive robotics research for wayfinding, showing timeline and classification of robotic systems for people with visual impairments"
+      },
+      "links": {
+        "preprint": "https://doi.org/10.31224/4985",
+        "techRxiv": "https://doi.org/10.36227/techrxiv.175459958.86411571/v1",
+        "project": "https://wayfinding-robots.github.io",
+        "dataset": "https://doi.org/10.3886/E235425V1",
+        "bibtex": "/refs/pohovey2025beyondcanes.bib.txt"
+      }
+    },
+    {
+      "id": "chakraborty2025ast",
+      "title": "Adaptive Stress Testing Black-Box LLM Planners",
+      "authors": [
+        {
+          "name": "Neeloy Chakraborty",
+          "isPrimaryUser": false,
+          "website": "https://theneeloy.github.io",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "John Pohovey",
+          "isPrimaryUser": true,
+          "website": "https://jhpohovey.github.io/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Melkior Ornik",
+          "isPrimaryUser": false,
+          "website": "https://mornik.web.illinois.edu",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Katherine Driggs-Campbell",
+          "isPrimaryUser": false,
+          "website": "https://krdc.web.illinois.edu/",
+          "equalContributionGroup": null
+        }
+      ],
+      "venue": {
+        "fullName": "Under Review",
+        "acronym": "Under Review",
+        "type": "preprint"
+      },
+      "year": 2025,
+      "date": "2025-05-01",
+      "status": "under-review",
+      "featured": false,
+      "awards": [],
+      "thumbnail": {
+        "static": "assets/figures/ast-visual.png",
+        "animated": null,
+        "alt": "Diagram showing adaptive stress testing framework for evaluating black-box LLM planning systems under various failure scenarios"
+      },
+      "links": {
+        "preprint": "https://arxiv.org/abs/2505.05665",
+        "bibtex": "/refs/Chakraborty2025Ast.bib.txt"
+      }
+    },
+    {
+      "id": "huang2024lit",
+      "title": "LIT: Large Language Model Driven Intention Tracking for Proactive Human-Robot Collaboration - A Robot Sous-Chef Application",
+      "authors": [
+        {
+          "name": "Zhe Huang",
+          "isPrimaryUser": false,
+          "website": "https://tedhuang96.github.io/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "John Pohovey",
+          "isPrimaryUser": true,
+          "website": "https://jhpohovey.github.io/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Ananya Yammanuru",
+          "isPrimaryUser": false,
+          "website": "https://parasollab.web.illinois.edu/people/ananyay2/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Katherine Driggs-Campbell",
+          "isPrimaryUser": false,
+          "website": "https://krdc.web.illinois.edu/",
+          "equalContributionGroup": null
+        }
+      ],
+      "venue": {
+        "fullName": "IEEE/CVF Computer Vision and Pattern Recognition Conference - Workshop on Embodied AI",
+        "acronym": "CVPR",
+        "type": "workshop"
+      },
+      "year": 2024,
+      "date": "2024-06-01",
+      "status": "published",
+      "featured": true,
+      "awards": ["Spotlight Presentation at CVPR 2024 Computer Vision in the Wild Workshop"],
+      "thumbnail": {
+        "static": "assets/figures/lit-framework-v3.png",
+        "animated": null,
+        "alt": "Framework diagram of LIT system showing LLM-driven intention tracking for proactive robot sous-chef collaboration in kitchen tasks"
+      },
+      "links": {
+        "preprint": "https://arxiv.org/abs/2406.13787",
+        "bibtex": "/refs/Huang2024Lit.bib.txt"
+      }
+    },
+    {
+      "id": "huang2024nirrtstar",
+      "title": "Neural Informed RRT*: Learning-based Path Planning with Point Cloud State Representations under Admissible Ellipsoidal Constraints",
+      "authors": [
+        {
+          "name": "Zhe Huang",
+          "isPrimaryUser": false,
+          "website": "https://tedhuang96.github.io/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Hongyu Chen",
+          "isPrimaryUser": false,
+          "website": "https://www.linkedin.com/in/hongyu-chen-91996b22b",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "John Pohovey",
+          "isPrimaryUser": true,
+          "website": "https://jhpohovey.github.io/",
+          "equalContributionGroup": null
+        },
+        {
+          "name": "Katherine Driggs-Campbell",
+          "isPrimaryUser": false,
+          "website": "https://krdc.web.illinois.edu/",
+          "equalContributionGroup": null
+        }
+      ],
+      "venue": {
+        "fullName": "IEEE International Conference on Robotics and Automation",
+        "acronym": "ICRA",
+        "type": "conference"
+      },
+      "year": 2024,
+      "date": "2024-05-01",
+      "status": "published",
+      "featured": true,
+      "awards": [],
+      "thumbnail": {
+        "static": "assets/figures/nirrtstar_thumbnail.gif",
+        "animated": "assets/figures/nirrtstar_thumbnail.gif",
+        "alt": "Animation showing neural-informed RRT* path planning algorithm navigating through 3D point cloud environment with learned heuristics"
+      },
+      "links": {
+        "preprint": "https://arxiv.org/abs/2309.14595",
+        "publication": "https://ieeexplore.ieee.org/document/10611099",
+        "project": "https://sites.google.com/view/nirrt-star",
+        "code": "https://github.com/tedhuang96/nirrt_star",
+        "codeROS": "https://github.com/tedhuang96/PNGNav",
+        "bibtex": "/refs/Huang2023NirttStar.bib.txt"
+      }
+    }
+  ]
+}

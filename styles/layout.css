@@ -1,0 +1,290 @@
+/*
+ * Layout Styles
+ * Responsive grid and flexbox layouts
+ */
+
+/* ========================================
+   Container
+   ======================================== */
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: var(--container-sm);
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: var(--container-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: var(--container-lg);
+    padding-left: var(--spacing-xl);
+    padding-right: var(--spacing-xl);
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: var(--container-xl);
+  }
+}
+
+/* ========================================
+   Grid System
+   ======================================== */
+
+.grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .grid-cols-sm-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-cols-md-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .grid-cols-md-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-cols-lg-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  
+  .grid-cols-lg-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Gap utilities */
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+.gap-xl { gap: var(--spacing-xl); }
+
+/* ========================================
+   Flexbox Utilities
+   ======================================== */
+
+.flex {
+  display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
+}
+
+/* Flex Direction */
+.flex-row { flex-direction: row; }
+.flex-col { flex-direction: column; }
+.flex-row-reverse { flex-direction: row-reverse; }
+.flex-col-reverse { flex-direction: column-reverse; }
+
+/* Flex Wrap */
+.flex-wrap { flex-wrap: wrap; }
+.flex-nowrap { flex-wrap: nowrap; }
+
+/* Justify Content */
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.justify-around { justify-content: space-around; }
+.justify-evenly { justify-content: space-evenly; }
+
+/* Align Items */
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.items-center { align-items: center; }
+.items-baseline { align-items: baseline; }
+.items-stretch { align-items: stretch; }
+
+/* Align Content */
+.content-start { align-content: flex-start; }
+.content-end { align-content: flex-end; }
+.content-center { align-content: center; }
+.content-between { align-content: space-between; }
+.content-around { align-content: space-around; }
+
+/* Flex Grow/Shrink */
+.flex-1 { flex: 1 1 0%; }
+.flex-auto { flex: 1 1 auto; }
+.flex-initial { flex: 0 1 auto; }
+.flex-none { flex: none; }
+
+.flex-grow { flex-grow: 1; }
+.flex-shrink { flex-shrink: 1; }
+
+/* ========================================
+   Page Layout Structure
+   ======================================== */
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: var(--z-modal);
+  padding: var(--spacing-md);
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  text-decoration: none;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background-color: var(--color-bg-elevated);
+  border-bottom: var(--border-width-thin) solid var(--color-border-light);
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  gap: var(--spacing-lg);
+}
+
+/* Main content */
+.site-main {
+  flex: 1;
+  padding-top: var(--spacing-2xl);
+  padding-bottom: var(--spacing-3xl);
+}
+
+/* Footer */
+.site-footer {
+  border-top: var(--border-width-thin) solid var(--color-border-light);
+  background-color: var(--color-bg-secondary);
+  padding-top: var(--spacing-xl);
+  padding-bottom: var(--spacing-xl);
+  margin-top: auto;
+  transition: background-color var(--transition-normal), border-color var(--transition-normal);
+}
+
+/* ========================================
+   Sections
+   ======================================== */
+
+.section {
+  margin-bottom: var(--spacing-3xl);
+}
+
+.section:last-child {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text-primary);
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+/* ========================================
+   Two Column Layout (for larger screens)
+   ======================================== */
+
+.two-column-layout {
+  display: grid;
+  gap: var(--spacing-2xl);
+}
+
+@media (min-width: 1024px) {
+  .two-column-layout {
+    grid-template-columns: 1fr 2fr;
+  }
+  
+  .two-column-layout.reverse {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+/* ========================================
+   Responsive Utilities
+   ======================================== */
+
+/* Show/Hide at breakpoints */
+.hidden { display: none !important; }
+
+@media (max-width: 639px) {
+  .hidden-mobile { display: none !important; }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .hidden-sm { display: none !important; }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hidden-md { display: none !important; }
+}
+
+@media (min-width: 1024px) {
+  .hidden-lg { display: none !important; }
+}
+
+/* Mobile-only */
+@media (min-width: 640px) {
+  .mobile-only { display: none !important; }
+}
+
+/* Desktop-only */
+@media (max-width: 1023px) {
+  .desktop-only { display: none !important; }
+}

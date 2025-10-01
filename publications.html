@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Verification -->
+  <meta name="google-site-verification" content="GSXNrTf4_d2dmQAEJlP4H1ib7qwzDozq1yrgt-vXP9w"/>
+  <meta name="msvalidate.01" content="BB0D1CCA2E4DF55FA2965DEDEA414B3B" />
+  
+  <meta name="description" content="Research publications by John Pohovey on human-robot interaction, assistive robotics, path planning, and AI for social good.">
+  <meta name="keywords" content="John Pohovey, publications, robotics research, assistive technology, path planning, multimodal AI, human-robot interaction">
+  <meta name="author" content="John Pohovey">
+  
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jhpohovey.github.io/publications.html">
+  <meta property="og:title" content="Publications - John Pohovey">
+  <meta property="og:description" content="Research publications on assistive robotics, HRI, and AI for social good">
+  
+  <title>Publications - John Pohovey</title>
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.svg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.svg">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/styles/reset.css">
+  <link rel="stylesheet" href="/styles/variables.css">
+  <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="/styles/theme.css">
+  <link rel="stylesheet" href="/styles/components.css">
+  <link rel="stylesheet" href="/styles/publications.css">
+  <link rel="stylesheet" href="/styles/utilities.css">
+  <link rel="stylesheet" href="/styles/print.css" media="print">
+</head>
+<body>
+  <!-- Skip to main content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content flex items-center justify-between">
+        <div class="logo">
+          <a href="/" class="site-logo">
+            <h1 class="text-xl font-bold">John Pohovey</h1>
+          </a>
+        </div>
+        
+        <!-- Navigation -->
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/publications.html" class="nav-link active" aria-current="page">Publications</a>
+        </nav>
+        
+        <!-- Theme toggle button -->
+        <button class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+          <span class="theme-icon-light" aria-hidden="true">☀️</span>
+          <span class="theme-icon-dark" aria-hidden="true">🌙</span>
+          <span class="sr-only">Toggle theme</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Main content -->
+  <main id="main-content" class="site-main">
+    <div class="container">
+      <!-- Page Header -->
+      <section class="page-header pt-3xl pb-lg">
+        <h1 class="text-3xl font-bold mb-md">Publications</h1>
+        <p class="text-md text-secondary">
+          My research focuses on robot navigation, machine learning, and human-robot interaction. 
+          Below is a selection of my published work.
+        </p>
+      </section>
+      
+      <!-- Filter/Sort Controls -->
+      <section class="filter-section pb-lg" aria-label="Filter and sort publications">
+        <div class="filter-controls">
+          <div class="flex items-center gap-md">
+            <label for="sort-select" class="filter-label">Sort by:</label>
+            <select id="sort-select" class="filter-select" aria-label="Sort publications">
+              <option value="year-desc" selected>Year (Newest First)</option>
+              <option value="year-asc">Year (Oldest First)</option>
+              <option value="title-asc">Title (A-Z)</option>
+              <option value="venue-asc">Venue (A-Z)</option>
+            </select>
+          </div>
+          
+          <div class="flex items-center gap-md">
+            <label for="filter-select" class="filter-label">Filter:</label>
+            <select id="filter-select" class="filter-select" aria-label="Filter publications">
+              <option value="all" selected>All Publications</option>
+              <option value="award">Award Winners</option>
+              <option value="conference">Conference Papers</option>
+              <option value="journal">Journal Articles</option>
+              <option value="workshop">Workshop Papers</option>
+            </select>
+          </div>
+          
+          <!-- View Toggle -->
+          <div class="flex items-center gap-md">
+            <span class="filter-label">View:</span>
+            <div class="view-toggle" role="group" aria-label="Toggle publication view">
+              <button 
+                id="view-list" 
+                class="view-toggle-btn active" 
+                aria-label="List view" 
+                aria-pressed="true"
+                title="List view (expanded)">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="2" y="3" width="16" height="3" rx="1" fill="currentColor"/>
+                  <rect x="2" y="8.5" width="16" height="3" rx="1" fill="currentColor"/>
+                  <rect x="2" y="14" width="16" height="3" rx="1" fill="currentColor"/>
+                </svg>
+                <span class="sr-only">List view</span>
+              </button>
+              <button 
+                id="view-grid" 
+                class="view-toggle-btn" 
+                aria-label="Grid view" 
+                aria-pressed="false"
+                title="Grid view (compact)">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="2" y="2" width="6" height="6" rx="1" fill="currentColor"/>
+                  <rect x="11" y="2" width="6" height="6" rx="1" fill="currentColor"/>
+                  <rect x="2" y="11" width="6" height="6" rx="1" fill="currentColor"/>
+                  <rect x="11" y="11" width="6" height="6" rx="1" fill="currentColor"/>
+                </svg>
+                <span class="sr-only">Grid view</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Future filters can be added here -->
+          <!-- Example: Author filter
+          <div class="flex items-center gap-md">
+            <label for="author-select" class="filter-label">Co-author:</label>
+            <select id="author-select" class="filter-select" aria-label="Filter by co-author">
+              <option value="all" selected>All Authors</option>
+              <!-- Options populated dynamically by JS -- >
+            </select>
+          </div>
+          -->
+          
+          <div class="flex items-center gap-sm">
+            <span class="text-sm text-secondary">
+              Showing <strong id="publication-count">0</strong> publications
+            </span>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Publications List -->
+      <section class="publications-section pb-3xl" aria-labelledby="publications-heading">
+        <h2 id="publications-heading" class="sr-only">List of publications</h2>
+        
+        <div class="publications-grid" id="publications-container">
+          <!-- Publications will be loaded here by JavaScript -->
+          <div class="loading" role="status">
+            <span>Loading publications...</span>
+          </div>
+        </div>
+        
+        <!-- Empty state (hidden by default, shown by JS if no results) -->
+        <div class="no-results hidden" id="no-results">
+          No publications match your current filter.
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <!-- Footer -->
+    <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+                  <div class="footer-content">
+                <p>&copy; 2025 John Pohovey. All rights reserved.</p>
+                <p class="footer-privacy hidden-print" style="font-size: 0.75rem; margin-top: 0.5rem; opacity: 0.8;">
+                    Privacy: This site uses localStorage (not cookies) to save your theme and view preferences locally. No tracking, no analytics.
+                </p>
+            </div>
+    </div>
+  </footer>
+  
+  <!-- ARIA live region for theme changes and dynamic updates -->
+  <div aria-live="polite" aria-atomic="true" class="sr-only" id="theme-announcement"></div>
+  <div aria-live="polite" aria-atomic="false" class="sr-only" id="filter-announcement"></div>
+  
+  <!-- Scripts -->
+  <script type="module" src="/scripts/theme.js"></script>
+  <script type="module" src="/scripts/publications.js"></script>
+  <script type="module" src="/scripts/animations.js"></script>
+  <script type="module" src="/scripts/accessibility.js"></script>
+</body>
+</html>

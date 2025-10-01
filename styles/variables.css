@@ -1,0 +1,220 @@
+/*
+ * Design System Variables
+ * CSS Custom Properties for consistent design tokens
+ */
+
+:root {
+  /* ========================================
+     Typography
+     ======================================== */
+  
+  /* Font Families */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  
+  /* Font Sizes - Modular Scale (1.25 ratio) */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-md: 1.125rem;     /* 18px */
+  --font-size-lg: 1.25rem;      /* 20px */
+  --font-size-xl: 1.5rem;       /* 24px */
+  --font-size-2xl: 1.875rem;    /* 30px */
+  --font-size-3xl: 2.25rem;     /* 36px */
+  --font-size-4xl: 3rem;        /* 48px */
+  
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* ========================================
+     Colors - Light Mode (Default)
+     ======================================== */
+  
+  /* Primary Colors */
+  --color-primary: #1a73e8;
+  --color-primary-hover: #1557b0;
+  --color-primary-light: #e8f0fe;
+  
+  /* Text Colors */
+  --color-text-primary: #202124;
+  --color-text-secondary: #5f6368;
+  --color-text-tertiary: #80868b;
+  --color-text-inverse: #ffffff;
+  
+  /* Background Colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-bg-tertiary: #f1f3f4;
+  --color-bg-elevated: #ffffff;
+  
+  /* Border Colors */
+  --color-border-light: #e8eaed;
+  --color-border-medium: #dadce0;
+  --color-border-dark: #5f6368;
+  
+  /* Semantic Colors */
+  --color-success: #1e8e3e;
+  --color-warning: #f9ab00;
+  --color-error: #d93025;
+  --color-info: #1a73e8;
+  
+  /* Link Colors */
+  --color-link: #1a73e8;
+  --color-link-hover: #1557b0;
+  --color-link-visited: #681da8;
+  
+  /* Accent Colors (for highlighting, awards, etc.) */
+  --color-accent-1: #ea4335;
+  --color-accent-2: #fbbc04;
+  --color-accent-3: #34a853;
+  
+  /* ========================================
+     Spacing Scale (4px base unit)
+     ======================================== */
+  
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-2xl: 3rem;      /* 48px */
+  --spacing-3xl: 4rem;      /* 64px */
+  --spacing-4xl: 6rem;      /* 96px */
+  
+  /* ========================================
+     Layout
+     ======================================== */
+  
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  
+  /* Breakpoints (for reference in JS) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  
+  /* ========================================
+     Borders & Radius
+     ======================================== */
+  
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+  
+  --border-radius-sm: 0.25rem;  /* 4px */
+  --border-radius-md: 0.5rem;   /* 8px */
+  --border-radius-lg: 0.75rem;  /* 12px */
+  --border-radius-xl: 1rem;     /* 16px */
+  --border-radius-full: 9999px;
+  
+  /* ========================================
+     Shadows
+     ======================================== */
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* ========================================
+     Transitions & Animations
+     ======================================== */
+  
+  --transition-fast: 150ms ease-in-out;
+  --transition-normal: 300ms ease-in-out;
+  --transition-slow: 500ms ease-in-out;
+  
+  --easing-linear: linear;
+  --easing-in: cubic-bezier(0.4, 0, 1, 1);
+  --easing-out: cubic-bezier(0, 0, 0.2, 1);
+  --easing-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* ========================================
+     Z-Index Scale
+     ======================================== */
+  
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+}
+
+/* ========================================
+   Dark Mode Colors
+   ======================================== */
+
+[data-theme="dark"] {
+  /* Primary Colors */
+  --color-primary: #8ab4f8;
+  --color-primary-hover: #adc6ff;
+  --color-primary-light: #1e3a5f;
+  
+  /* Text Colors */
+  --color-text-primary: #e8eaed;
+  --color-text-secondary: #9aa0a6;
+  --color-text-tertiary: #5f6368;
+  --color-text-inverse: #202124;
+  
+  /* Background Colors */
+  --color-bg-primary: #202124;
+  --color-bg-secondary: #292a2d;
+  --color-bg-tertiary: #35363a;
+  --color-bg-elevated: #292a2d;
+  
+  /* Border Colors */
+  --color-border-light: #3c4043;
+  --color-border-medium: #5f6368;
+  --color-border-dark: #9aa0a6;
+  
+  /* Semantic Colors */
+  --color-success: #81c995;
+  --color-warning: #fdd663;
+  --color-error: #f28b82;
+  --color-info: #8ab4f8;
+  
+  /* Link Colors */
+  --color-link: #8ab4f8;
+  --color-link-hover: #adc6ff;
+  --color-link-visited: #c58af9;
+  
+  /* Accent Colors */
+  --color-accent-1: #f28b82;
+  --color-accent-2: #fdd663;
+  --color-accent-3: #81c995;
+  
+  /* Shadows (darker for dark mode) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   Accessibility - High Contrast Mode
+   ======================================== */
+
+@media (prefers-contrast: high) {
+  :root {
+    --color-border-light: #000000;
+    --color-border-medium: #000000;
+    --shadow-sm: none;
+    --shadow-md: 0 0 0 2px currentColor;
+    --shadow-lg: 0 0 0 3px currentColor;
+  }
+}
