@@ -145,11 +145,11 @@
       <section class="news-section pb-3xl" aria-labelledby="news-heading">
         <h2 id="news-heading" class="text-2xl font-bold mb-lg">News & Updates</h2>
         
-        <ul class="news-list">
-          <li class="news-item highlight">
+        <ul class="news-list" id="news-list">
+          <li class="news-item">
             <div class="news-item-date">June 2025</div>
             <div class="news-item-text">
-              I am delighted to be <a href="https://www.research.gov/grfp/AwardeeList.do?method=loadAwardeeList" target="_blank" rel="noopener noreferrer">awarded</a> the <strong>National Science Foundation Graduate Research Fellowship (NSF GRFP)</strong>! 🎉
+              I am delighted to be <a href="https://grad.illinois.edu/news/nineteen-illinois-students-awarded-nsf-graduate-research-fellowships" target="_blank" rel="noopener noreferrer">awarded</a> the <strong>National Science Foundation Graduate Research Fellowship (<a href="https://www.nsfgrfp.org" target="_blank" rel="noopener noreferrer">NSF GRFP</a>)</strong>! 🎉
             </div>
           </li>
           
@@ -167,76 +167,83 @@
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">June 2024</div>
             <div class="news-item-text">
               We present our work <strong>LIT</strong> at <a href="https://cvpr.thecvf.com/Conferences/2024" target="_blank" rel="noopener noreferrer">CVPR 2024</a> Workshops in Seattle, WA.
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">June 2024</div>
             <div class="news-item-text">
               <strong>LIT</strong> selected for a <strong>Spotlight Presentation</strong> at CVPR 2024 Computer Vision in the Wild Workshop! ⭐
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">May 2024</div>
             <div class="news-item-text">
               One submission accepted at the Workshop on Embodied AI at CVPR 2024, and to the Workshop on Computer Vision in the Wild at CVPR 2024.
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">May 2024</div>
             <div class="news-item-text">
               Starting my internship at <strong>Microsoft</strong>.
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">May 2024</div>
             <div class="news-item-text">
               I present our work <strong>NIRRT*</strong> at <a href="https://2024.ieee-icra.org" target="_blank" rel="noopener noreferrer">ICRA 2024</a> in Yokohama, Japan!
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">March 2024</div>
             <div class="news-item-text">
               I am honored to receive the <strong>Henderson Fellowship</strong>.
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">January 2024</div>
             <div class="news-item-text">
               One paper accepted to <a href="https://2024.ieee-icra.org" target="_blank" rel="noopener noreferrer">ICRA 2024</a>.
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">August 2023</div>
             <div class="news-item-text">
               I begin grad school!
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">May 2023</div>
             <div class="news-item-text">
               Starting my internship at <strong>Microsoft</strong>.
             </div>
           </li>
           
-          <li class="news-item">
+          <li class="news-item news-item-collapsible">
             <div class="news-item-date">May 2023</div>
             <div class="news-item-text">
               Graduating with two B.S. degrees and one certificate.
             </div>
           </li>
         </ul>
+        
+        <button class="news-toggle-btn" aria-expanded="false" aria-controls="news-list">
+          <span class="news-toggle-text">Show more news</span>
+          <svg class="news-toggle-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
       </section>
       
       <!-- Featured Publications -->
@@ -275,6 +282,7 @@
   <!-- Scripts -->
   <script type="module" src="/scripts/theme.js"></script>
   <script type="module" src="/scripts/email.js"></script>
+  <script type="module" src="/scripts/news-toggle.js"></script>
   <script type="module" src="/scripts/publications.js"></script>
   <script type="module" src="/scripts/animations.js"></script>
   <script type="module" src="/scripts/accessibility.js"></script>

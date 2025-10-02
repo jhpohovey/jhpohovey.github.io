@@ -356,6 +356,46 @@
   border-left-color: var(--color-primary);
 }
 
+/* Collapsible news items */
+.news-item-collapsible {
+  display: none;
+}
+
+.news-section.expanded .news-item-collapsible {
+  display: block;
+}
+
+/* News toggle button */
+.news-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.news-toggle-btn:hover {
+  background-color: var(--color-primary);
+  color: var(--color-bg-primary);
+  border-color: var(--color-primary);
+}
+
+.news-toggle-icon {
+  transition: transform var(--transition-fast);
+}
+
+.news-section.expanded .news-toggle-icon {
+  transform: rotate(180deg);
+}
+
 /* ========================================
    Bio Section
    ======================================== */
