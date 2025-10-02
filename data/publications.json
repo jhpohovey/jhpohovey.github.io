@@ -69,8 +69,10 @@
         "alt": "Visual overview of 40 years of assistive robotics research for wayfinding, showing timeline and classification of robotic systems for people with visual impairments"
       },
       "links": {
-        "preprint": "https://doi.org/10.31224/4985",
-        "techRxiv": "https://doi.org/10.36227/techrxiv.175459958.86411571/v1",
+        "preprint": [
+          "https://doi.org/10.31224/4985",
+          "https://doi.org/10.36227/techrxiv.175459958.86411571/v1"
+        ],
         "project": "https://wayfinding-robots.github.io",
         "dataset": "https://doi.org/10.3886/E235425V1",
         "bibtex": "/refs/pohovey2025beyondcanes.bib.txt"
@@ -121,7 +123,7 @@
         "alt": "Diagram showing adaptive stress testing framework for evaluating black-box LLM planning systems under various failure scenarios"
       },
       "links": {
-        "preprint": "https://arxiv.org/abs/2505.05665",
+        "preprint": ["https://arxiv.org/abs/2505.05665"],
         "bibtex": "/refs/Chakraborty2025Ast.bib.txt"
       }
     },
@@ -155,9 +157,20 @@
         }
       ],
       "venue": {
-        "fullName": "IEEE/CVF Computer Vision and Pattern Recognition Conference - Workshop on Embodied AI",
+        "fullName": "IEEE/CVF Computer Vision and Pattern Recognition Conference",
         "acronym": "CVPR",
-        "type": "workshop"
+        "type": "conference",
+        "url": "https://cvpr.thecvf.com/Conferences/2024",
+        "workshops": [
+          {
+            "name": "Embodied AI",
+            "url": "https://embodied-ai.org"
+          },
+          {
+            "name": "Computer Vision in the Wild",
+            "url": "https://computer-vision-in-the-wild.github.io/cvpr-2024/"
+          }
+        ]
       },
       "year": 2024,
       "date": "2024-06-01",
@@ -170,7 +183,7 @@
         "alt": "Framework diagram of LIT system showing LLM-driven intention tracking for proactive robot sous-chef collaboration in kitchen tasks"
       },
       "links": {
-        "preprint": "https://arxiv.org/abs/2406.13787",
+        "preprint": ["https://arxiv.org/abs/2406.13787"],
         "bibtex": "/refs/Huang2024Lit.bib.txt"
       }
     },
@@ -206,7 +219,8 @@
       "venue": {
         "fullName": "IEEE International Conference on Robotics and Automation",
         "acronym": "ICRA",
-        "type": "conference"
+        "type": "conference",
+        "url": "https://2024.ieee-icra.org/"
       },
       "year": 2024,
       "date": "2024-05-01",
@@ -219,7 +233,7 @@
         "alt": "Animation showing neural-informed RRT* path planning algorithm navigating through 3D point cloud environment with learned heuristics"
       },
       "links": {
-        "preprint": "https://arxiv.org/abs/2309.14595",
+        "preprint": ["https://arxiv.org/abs/2309.14595"],
         "publication": "https://ieeexplore.ieee.org/document/10611099",
         "project": "https://sites.google.com/view/nirrt-star",
         "code": "https://github.com/tedhuang96/nirrt_star",

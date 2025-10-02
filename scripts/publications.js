@@ -41,6 +41,39 @@ async function fetchPublications() {
 }
 
 /**
+ * Render venue with workshops
+ * @param {Object} venue - Venue object with fullName, acronym, url, workshops
+ * @param {number} year - Publication year
+ * @returns {string} HTML string
+ */
+function renderVenueWithWorkshops(venue, year) {
+  const hasWorkshops = venue.workshops && venue.workshops.length > 0;
+  
+  // Build the venue name with year
+  const venueName = `${venue.acronym || venue.fullName} ${year}`;
+  
+  // Render the main venue line (only venue + year is linked)
+  const venueLink = venue.url 
+    ? `<a href="${venue.url}" target="_blank" rel="noopener noreferrer"><strong>${venueName}</strong></a>`
+    : `<strong>${venueName}</strong>`;
+  
+  // Add "Workshops" label if applicable (not part of the link)
+  // Use &nbsp; for reliable spacing
+  const workshopLabel = hasWorkshops
+    ? `&nbsp;<strong>${venue.workshops.length === 1 ? 'Workshop' : 'Workshops'}</strong>`
+    : '';
+  
+  // Render workshop names if present - add space before the span
+  const workshopNames = hasWorkshops
+    ? `&nbsp;<span class="workshop-names">${venue.workshops.map(w => 
+        `<a href="${w.url}" target="_blank" rel="noopener noreferrer" class="workshop-link">${w.name}</a>`
+      ).join(', ')}</span>`
+    : '';
+  
+  return `${venueLink}${workshopLabel}${workshopNames}`;
+}
+
+/**
  * Render a single author
  * @param {Object} author - Author object with name, website, isPrimaryUser
  * @returns {string} HTML string
@@ -72,66 +105,47 @@ function renderAuthors(authors) {
 function renderLinks(links) {
   const linkButtons = [];
   
+  // Published paper (IEEE, ACM, etc.)
   if (links.publication) {
-    linkButtons.push(`
-      <a href="${links.publication}" class="publication-link" target="_blank" rel="noopener noreferrer">
-        📄 Paper
-      </a>
-    `);
-  } else if (links.preprint) {
-    linkButtons.push(`
-      <a href="${links.preprint}" class="publication-link" target="_blank" rel="noopener noreferrer">
-        📄 Preprint
-      </a>
-    `);
+    linkButtons.push(`<a href="${links.publication}" class="publication-link" target="_blank" rel="noopener noreferrer">[Paper]</a>`);
+  }
+  
+  // Preprint servers - auto-detect from URL
+  if (links.preprint) {
+    const preprints = Array.isArray(links.preprint) ? links.preprint : [links.preprint];
+    preprints.forEach(url => {
+      // Extract server name from URL
+      let label = 'Preprint';
+      if (url.includes('arxiv')) label = 'arXiv';
+      else if (url.includes('10.31224')) label = 'engrXiv';
+      else if (url.includes('techrxiv') || url.includes('10.36227')) label = 'TechRxiv';
+      
+      linkButtons.push(`<a href="${url}" class="publication-link" target="_blank" rel="noopener noreferrer">[${label}]</a>`);
+    });
   }
   
   if (links.code) {
-    linkButtons.push(`
-      <a href="${links.code}" class="publication-link" target="_blank" rel="noopener noreferrer">
-        💻 Code
-      </a>
-    `);
+    linkButtons.push(`<a href="${links.code}" class="publication-link" target="_blank" rel="noopener noreferrer">[Code]</a>`);
   }
   
   if (links.codeROS) {
-    linkButtons.push(`
-      <a href="${links.codeROS}" class="publication-link" target="_blank" rel="noopener noreferrer">
-        🤖 ROS Package
-      </a>
-    `);
+    linkButtons.push(`<a href="${links.codeROS}" class="publication-link" target="_blank" rel="noopener noreferrer">[ROS Package]</a>`);
   }
   
   if (links.video) {
-    linkButtons.push(`
-      <a href="${links.video}" class="publication-link" target="_blank" rel="noopener noreferrer">
-        🎥 Video
-      </a>
-    `);
+    linkButtons.push(`<a href="${links.video}" class="publication-link" target="_blank" rel="noopener noreferrer">[Video]</a>`);
   }
   
   if (links.project) {
-    linkButtons.push(`
-      <a href="${links.project}" class="publication-link" target="_blank" rel="noopener noreferrer">
-        🌐 Project Site
-      </a>
-    `);
+    linkButtons.push(`<a href="${links.project}" class="publication-link" target="_blank" rel="noopener noreferrer">[Project Page]</a>`);
   }
   
   if (links.dataset) {
-    linkButtons.push(`
-      <a href="${links.dataset}" class="publication-link" target="_blank" rel="noopener noreferrer">
-        📊 Dataset
-      </a>
-    `);
+    linkButtons.push(`<a href="${links.dataset}" class="publication-link" target="_blank" rel="noopener noreferrer">[Dataset]</a>`);
   }
   
   if (links.bibtex) {
-    linkButtons.push(`
-      <a href="${links.bibtex}" class="publication-link" target="_blank" rel="noopener noreferrer">
-        📋 BibTeX
-      </a>
-    `);
+    linkButtons.push(`<a href="${links.bibtex}" class="publication-link" target="_blank" rel="noopener noreferrer">[BibTeX]</a>`);
   }
   
   return linkButtons.join('\n');
@@ -167,8 +181,7 @@ function renderPublication(pub) {
         </div>
         
         <div class="publication-venue">
-          <strong>${pub.venue.acronym || pub.venue.fullName}</strong>
-          <span>${pub.year}</span>
+          ${renderVenueWithWorkshops(pub.venue, pub.year)}
         </div>
         
         ${awardBadge}
