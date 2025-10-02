@@ -304,6 +304,11 @@
   flex-shrink: 0;
 }
 
+/* Email unscramble - after reveal, allow text selection */
+.email-link.email-revealed {
+  cursor: text;
+}
+
 /* ========================================
    News/Updates List
    ======================================== */
