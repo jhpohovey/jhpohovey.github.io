@@ -10,10 +10,18 @@
  * @returns {string} Decrypted string
  */
 function xorDecrypt(hexString, key) {
+  // Sanitize hex string: remove non-hex chars and normalize
+  let hex = String(hexString).replace(/[^0-9a-fA-F]/g, '');
+  // If odd length, pad with a leading zero
+  if (hex.length % 2 === 1) {
+    hex = '0' + hex;
+  }
+
   // Convert hex to bytes
   const bytes = [];
-  for (let i = 0; i < hexString.length; i += 2) {
-    bytes.push(parseInt(hexString.substr(i, 2), 16));
+  for (let i = 0; i < hex.length; i += 2) {
+    const byte = parseInt(hex.slice(i, i + 2), 16);
+    bytes.push(Number.isNaN(byte) ? 0 : byte);
   }
   
   // XOR decrypt
@@ -33,42 +41,55 @@ function xorDecrypt(hexString, key) {
  * @param {number} duration - Animation duration in ms
  */
 function animateUnscramble(textElement, finalText, duration = 800) {
-  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789@.';
-  const steps = 20;
-  const stepDuration = duration / steps;
-  let currentStep = 0;
-  
-  const interval = setInterval(() => {
-    if (currentStep >= steps) {
-      textElement.textContent = finalText;
-      clearInterval(interval);
-      return;
-    }
-    
-    // Gradually reveal more of the final text
-    const revealedLength = Math.floor((currentStep / steps) * finalText.length);
-    let scrambled = '';
-    
-    for (let i = 0; i < finalText.length; i++) {
-      if (i < revealedLength) {
-        scrambled += finalText[i];
-      } else if (finalText[i] === ' ' || finalText[i] === '@' || finalText[i] === '.') {
-        scrambled += finalText[i];
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789@._-+'; // include common email chars
+
+  // Use requestAnimationFrame for smoother timing and reliability
+  // Return a promise that resolves when the animation completes
+  return new Promise((resolve) => {
+    const start = performance.now();
+    let rafId = null;
+
+    function step(now) {
+      const elapsed = now - start;
+      const t = Math.min(1, elapsed / duration);
+
+      const revealedLength = Math.floor(t * finalText.length);
+
+      // Build scrambled string based on revealedLength
+      let scrambled = '';
+      for (let i = 0; i < finalText.length; i++) {
+        const ch = finalText[i];
+        if (i < revealedLength) {
+          scrambled += ch;
+        } else if (ch === ' ' || ch === '@' || ch === '.' || ch === '-' || ch === '_') {
+          // Keep some characters visible during animation
+          scrambled += ch;
+        } else {
+          scrambled += characters[Math.floor(Math.random() * characters.length)];
+        }
+      }
+
+      textElement.textContent = scrambled;
+
+      if (t < 1) {
+        rafId = requestAnimationFrame(step);
       } else {
-        scrambled += characters[Math.floor(Math.random() * characters.length)];
+        // Ensure final text is shown
+        textElement.textContent = finalText;
+        if (rafId) cancelAnimationFrame(rafId);
+        resolve();
       }
     }
-    
-    textElement.textContent = scrambled;
-    currentStep++;
-  }, stepDuration);
+
+    rafId = requestAnimationFrame(step);
+  });
 }
 
 /**
  * Handle email reveal on click
  * @param {Event} event - Click event
  */
-function handleEmailClick(event) {
+async function handleEmailClick(event) {
   event.preventDefault();
   
   const element = event.currentTarget;
@@ -98,21 +119,27 @@ function handleEmailClick(event) {
   // Mark as revealed
   element.classList.add('email-revealed');
   
-  // Animate the unscrambling
-  animateUnscramble(textElement, email);
-  
-  // After animation, replace the link with a plain span to make it fully selectable
-  setTimeout(() => {
-    // Create a new span element to replace the link
-    const span = document.createElement('span');
-    span.className = element.className;
-    span.innerHTML = element.innerHTML;
-    span.style.userSelect = 'text';
-    span.style.cursor = 'text';
-    
-    // Replace the link with the span
-    element.replaceWith(span);
-  }, 850);
+  // Animate the unscrambling and then replace the link with a plain span to make it fully selectable
+  const animDuration = 800;
+  try {
+    await animateUnscramble(textElement, email, animDuration);
+  } catch (e) {
+    // If animation fails for any reason, fall back to immediately showing the email
+    console.error('animateUnscramble failed', e);
+    textElement.textContent = email;
+  }
+
+  // Replace the link with a span containing the final email text
+  const span = document.createElement('span');
+  // Keep the same classes so styling remains consistent
+  span.className = element.className;
+  // Put the final decoded email as plain text
+  span.textContent = email;
+  span.style.userSelect = 'text';
+  span.style.cursor = 'text';
+
+  // Replace the link with the span
+  element.replaceWith(span);
 }
 
 /**
