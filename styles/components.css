@@ -315,6 +315,39 @@
 
 .news-list {
   list-style: none;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  border: var(--border-width-thin) solid var(--color-border-light);
+  border-radius: var(--border-radius-lg);
+  background-color: var(--color-bg-elevated);
+}
+
+/* Custom scrollbar styling */
+.news-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.news-list::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+  border-radius: var(--border-radius-md);
+  margin: var(--spacing-sm) 0;
+}
+
+.news-list::-webkit-scrollbar-thumb {
+  background: var(--color-border-medium);
+  border-radius: var(--border-radius-md);
+  border: 2px solid var(--color-bg-secondary);
+}
+
+.news-list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Firefox scrollbar styling */
+.news-list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-medium) var(--color-bg-secondary);
 }
 
 .news-item {
@@ -322,6 +355,10 @@
   border-left: 3px solid var(--color-border-light);
   margin-bottom: var(--spacing-md);
   transition: border-color var(--transition-fast);
+}
+
+.news-item:last-child {
+  margin-bottom: 0;
 }
 
 .news-item:hover {
@@ -356,44 +393,9 @@
   border-left-color: var(--color-primary);
 }
 
-/* Collapsible news items */
+/* Collapsible news items - not used with scrollable version */
 .news-item-collapsible {
-  display: none;
-}
-
-.news-section.expanded .news-item-collapsible {
   display: block;
-}
-
-/* News toggle button */
-.news-toggle-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  margin-top: var(--spacing-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: transparent;
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-md);
-  color: var(--color-primary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.news-toggle-btn:hover {
-  background-color: var(--color-primary);
-  color: var(--color-bg-primary);
-  border-color: var(--color-primary);
-}
-
-.news-toggle-icon {
-  transition: transform var(--transition-fast);
-}
-
-.news-section.expanded .news-toggle-icon {
-  transform: rotate(180deg);
 }
 
 /* ========================================
